@@ -1,0 +1,92 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+header{
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+}
+h1{
+    color:#ffffff;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+.hero{
+    color:#666666;
+    font-size: 14px;
+}
+.Chat{
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    flex: 1;
+    display: flex;
+    gap:12px;
+    overflow-y:auto;
+    flex-direction: column;
+}
+.Botmsg{
+    background-color: #ffffff;
+    color:#2a2a2a;
+    padding: 12px 15px;
+    border-radius: 8px;
+    width: fit-content;
+    max-width: 70%;
+    line-height: 1.4;
+    align-self: flex-start;
+
+}
+.Botmesg{
+    font-size: 15px;
+}
+.input{
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto 20px;
+    display: flex;
+    gap: 10px;
+}
+.input input{
+    flex:1;
+    padding : 12px 15px;
+    border: solid 1px #ccc;
+    border-radius: 9px;
+    font-size: 15px;
+    
+}
+.input input:focus{
+    border-color: #4f46e5;
+}
+button{
+    padding: 0 20px;
+    border: none;
+    border-radius: 7px;
+    background: #4f46e5;
+    color: white;
+    font-weight:bold;
+    font-size: 15px;
+    cursor: pointer;
+}
+button:hover{
+    background: #3b32c6;
+}
+.UserBubble{
+    background-color: #2a2a2a;
+    color:#ffffff;
+    padding: 12px 15px;
+    border-radius: 8px;
+    width: fit-content;
+    max-width: 60%;
+    line-height: 1.3;
+    align-self: flex-end;
+}
