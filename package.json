@@ -1,0 +1,9 @@
+{
+    "name": "sylqora-ai",
+    "version": "1.0.0",
+    "description": "Sylqora AI study companion",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    }
+}
