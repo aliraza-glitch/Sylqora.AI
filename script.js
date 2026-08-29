@@ -1,5 +1,5 @@
-async function sendMessage(){
 let input = document.getElementById("input")
+async function sendMessage(){
 let Message = input.value
 let newMsg = document.querySelector(".Chat")
 let userMsg = document.createElement("div")
