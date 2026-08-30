@@ -13,13 +13,14 @@ const response = await fetch("https://api.groq.com/openai/v1/chat/completions" ,
         "Content-Type":"application/json",
         "Authorization" : "Bearer " + APIkey
     },
-    body :JSON.stringify({
-        model: "groq/compound",
-        messages : [
+    body:JSON.stringify({
+        model:"groq/compound",
+        messages:[
             {role:"user",
                 content: message
             }
-        ]
+        ],
+        max_tokens: 1000
     })
 })
 const data = await response.json()
