@@ -24,7 +24,7 @@ const response = await fetch("https://api.groq.com/openai/v1/chat/completions" ,
 })
 const data = await response.json()
 console.log (data)
-console.log(data.choices[0].message.content)
+
 let Replydata = {
     Reply: "I have recieved your message"
 }
