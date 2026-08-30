@@ -1,5 +1,5 @@
-async function sendMessage(){
 let input = document.getElementById("input")
+async function sendMessage(){
 let Message = input.value
 let newMsg = document.querySelector(".Chat")
 let userMsg = document.createElement("div")
@@ -45,7 +45,7 @@ async function toServer(message){
     let msgData = {
         message: message
     }
-    let response = await fetch("http://localhost:8000/chat",{
+    let response = await fetch("/api/chat",{
         method : "POST",   
         headers : {
             "Content-Type":"application/json"
@@ -57,7 +57,7 @@ async function toServer(message){
 }
 
 async function Checkserver(){
-    let check = await fetch("http://localhost:8000/health")
+    let check = await fetch("/api/health")
     let checktxt = await check.json()
     console.log("SERVER RESPONSE:", checktxt)
     document.getElementById("status").textContent = checktxt.status
