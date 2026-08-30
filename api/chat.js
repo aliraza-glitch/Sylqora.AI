@@ -1,4 +1,4 @@
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
     if (req.method !== "POST"){
         return res.status(405).json({
             error: "Method not allowed"
@@ -6,6 +6,26 @@ module.exports = (req, res) => {
         })
     }
 let message = req.body.message
+const APIkey = process.env.GEMINI_API_KEY
+const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + APIkey,{
+    method: "POST",
+    headers: {
+        "Content-Type":"application/json"
+    },
+    body :JSON.stringify({
+        contents: [
+            {
+                parts:[
+                    {
+                        text : message
+                    }
+                ]
+            }
+        ]
+    })
+})
+const data = await response.json()
+console.log (data)
 let Replydata = {
     Reply: "I have recieved your message"
 }
