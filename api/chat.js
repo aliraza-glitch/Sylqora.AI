@@ -6,26 +6,25 @@ module.exports = async (req, res) => {
         })
     }
 let message = req.body.message
-const APIkey = process.env.GEMINI_API_KEY
-const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + APIkey,{
+const APIkey = process.env.GROQ_API_KEY
+const response = await fetch("https://api.groq.com/openai/v1/chat/completions" ,{
     method: "POST",
     headers: {
-        "Content-Type":"application/json"
+        "Content-Type":"application/json",
+        "Authorization" : "Bearer " + APIkey
     },
     body :JSON.stringify({
-        contents: [
-            {
-                parts:[
-                    {
-                        text : message
-                    }
-                ]
+        model: "llama-3.3-70b-versatile",
+        messages : [
+            {role:"user",
+                content: message
             }
         ]
     })
 })
 const data = await response.json()
 console.log (data)
+console.log(data.choices[0].message.content)
 let Replydata = {
     Reply: "I have recieved your message"
 }
