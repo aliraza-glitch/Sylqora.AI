@@ -14,7 +14,7 @@ const response = await fetch("https://api.groq.com/openai/v1/chat/completions" ,
         "Authorization" : "Bearer " + APIkey
     },
     body :JSON.stringify({
-        model: "llama-3.1-8b-instant",
+        model: "groq/compound",
         messages : [
             {role:"user",
                 content: message
