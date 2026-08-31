@@ -41,7 +41,7 @@ module.exports = async (req, res) => {
                             content: message
                         }
                     ],
-                    max_tokens: 1000
+                    max_tokens: 400
                 })
             }
         )
