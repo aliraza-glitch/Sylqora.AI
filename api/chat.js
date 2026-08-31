@@ -5,8 +5,9 @@ module.exports = async (req, res) => {
         })
     }
 
+
     try {
-        let message = req.body?.message
+        const message = req.body?.message
 
         if (!message) {
             return res.status(400).json({
@@ -73,4 +74,5 @@ module.exports = async (req, res) => {
             error: "Server error: " + error.message
         })
     }
+
 }
