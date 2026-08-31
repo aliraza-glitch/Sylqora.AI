@@ -109,5 +109,7 @@ button:hover{
     padding: 12px 15px;
     border-radius: 8px;
     width: fit-content;
+    max-width: 70%;
+    line-height: 1.4;
     align-self: flex-start;
 }
