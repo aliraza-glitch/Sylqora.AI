@@ -112,4 +112,5 @@ button:hover{
     max-width: 70%;
     line-height: 1.4;
     align-self: flex-start;
+    flex-direction: column;
 }
