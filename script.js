@@ -42,6 +42,7 @@ async function toServer(message){
         body : JSON.stringify(msgData)
     })
     let data = await response.json()
+    console.log("API data:" ,data)
     return data.Reply
 }
 
