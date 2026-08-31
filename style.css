@@ -113,4 +113,5 @@ button:hover{
     line-height: 1.4;
     align-self: flex-start;
     flex-direction: column;
+    font-style: italic;
 }
