@@ -104,8 +104,8 @@ button:hover{
 }
 .Thinkin{
     display: none;
-    background-color: #1e1e1e;
-    color: lightgray;
+    background-color:white;
+    color: #2a2a2a;
     padding: 12px 15px;
     border-radius: 8px;
     width: fit-content;
