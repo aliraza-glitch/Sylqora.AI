@@ -7,7 +7,10 @@ userMsg.className = "UserBubble"
 userMsg.textContent = Message
 newMsg.append(userMsg)
 input.value = ""
+thinking = document.querySelector(".Thinking")
+thinking.style.display = "block"
 let answer = await toServer(Message)
+thinking.style.display = "none"
 sendBotMessage(answer)
 }
 input.addEventListener("keydown",(enter) => {

@@ -22,7 +22,7 @@ h1{
     margin-bottom: 5px;
 }
 .hero{
-    color:#666666;
+    color:#d3d3d3;
     font-size: 14px;
 }
 .Chat{
@@ -31,7 +31,7 @@ h1{
     margin: 20px auto;
     flex: 1;
     display: flex;
-    gap:12px;
+    gap: 16px;
     overflow-y:auto;
     flex-direction: column;
 }
@@ -59,13 +59,19 @@ h1{
 .input input{
     flex:1;
     padding : 12px 15px;
-    border: solid 1px #ccc;
+    border: 1px solid #333;
     border-radius: 9px;
     font-size: 15px;
+    background-color: #1e1e1e;
+    color: white;
     
+}
+.input input::placeholder{
+    color: #777;
 }
 .input input:focus{
     border-color: #4f46e5;
+    outline: none;
 }
 button{
     padding: 0 20px;
@@ -95,4 +101,7 @@ button:hover{
     display: block;
     font-size: 20px;
     margin: 20px;
+}
+.Thinkin{
+    display: none;
 }

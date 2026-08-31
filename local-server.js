@@ -9,9 +9,7 @@ const server = http.createServer((req, res) => {
         res.end()
     }
     else if (req.url == "/health" && req.method == "GET"){
-        let statusdata = {
-            status:"online"
-        }
+        
         res.setHeader("Content-Type", "application/json")
         res.end(JSON.stringify(statusdata))
     }
