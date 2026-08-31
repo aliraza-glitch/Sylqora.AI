@@ -63,7 +63,6 @@ async function Checkserver(){
     let check = await fetch("/api/health")
     let checktxt = await check.json()
     console.log("SERVER RESPONSE:", checktxt)
-    document.getElementById("status").textContent = checktxt.status
-
+    
 }
 document.getElementById("Checkbutton").addEventListener("click", Checkserver)
