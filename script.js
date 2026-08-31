@@ -25,7 +25,7 @@ function sendBotMessage(answer){
     Botmsg.textContent = "Hey Great Question!. Let's work that out together"
     let findChat = document.querySelector(".Chat")
     findChat.append(Botmsg)
-        Botmsg.textContent = answer
+        Botmsg.innerHTML = answer
 }
 
 
