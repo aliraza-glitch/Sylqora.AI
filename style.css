@@ -1,117 +1,114 @@
 *{
-    box-sizing: border-box;
+    
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
+
 body{
-    font-family: Arial, sans-serif;
     background-color: #121212;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-header{
-    background-color: #1e1e1e;
-    padding: 20px;
-    border-bottom: 1px solid #ccc;
-    text-align: center;
-}
-h1{
-    color:#ffffff;
-    font-size: 24px;
-    margin-bottom: 5px;
+    color: white;
+    font-family: Arial, sans-serif;
 }
 .hero{
-    color:#d3d3d3;
-    font-size: 14px;
-}
-.Chat{
-    width: 90%;
-    max-width: 800px;
-    margin: 20px auto;
-    flex: 1;
+    text-align: center;
+    align-items: center;
     display: flex;
-    gap: 16px;
-    overflow-y:auto;
     flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
 }
-.Botmsg{
-    background-color: #ffffff;
-    color:#2a2a2a;
-    padding: 12px 15px;
-    border-radius: 8px;
-    width: fit-content;
-    max-width: 70%;
-    line-height: 1.4;
-    align-self: flex-start;
-
+.hero h1{
+    font-size : 64px;
+    margin-bottom: 15px;
 }
-.Botmesg{
-    font-size: 15px;
+.hero h1 span{
+    color: rgb(226, 132, 226);
 }
-.input{
-    width: 90%;
-    max-width: 800px;
-    margin: 0 auto 20px;
-    display: flex;
-    gap: 10px;
+.hero p{
+    font-size: 19px;
+    color: #b3b3b3;
+    margin-bottom: 30px;
 }
-.input input{
-    flex:1;
-    padding : 12px 15px;
-    border: 1px solid #333;
-    border-radius: 9px;
-    font-size: 15px;
-    background-color: #1e1e1e;
+.getstarted{
+    background-color: rgb(226, 132, 226);
     color: white;
+    padding: 14px 28px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+}
+.getstarted:hover{
+    background-color: rgb(186, 92, 186);
+}
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color:#202020;
+}
+.nav-links a:hover{
+    color: rgb(226, 132, 226);
+}
+.navbtn{
+    background-color: rgb(236, 142, 236);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+}
+.navbtn:hover{
+    background-color: rgb(139, 65, 139);
+    color: white;
+}
+.nav-links{
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content:space-evenly;
+}
+.nav-links a{
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+}
+.brand{
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+}
+.brand span{
+    color: rgb(226, 132, 226);
+}
+.features{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    padding: 20px 40px;
+}
+.feature{
+    background-color: #202020;
+    padding: 20px 40px;
+    border-radius: 10px;
+    text-align: left;
+    border: 1px solid #696666;
     
 }
-.input input::placeholder{
-    color: #777;
+.feature h2{
+    font-size: 24px;
+    margin-bottom: 15px;
+    text-decoration: underline;
 }
-.input input:focus{
-    border-color: #4f46e5;
-    outline: none;
+.feature p{
+    font-size: 16px;
+    color: #b3b3b3;
 }
-button{
-    padding: 0 20px;
-    border: none;
-    border-radius: 7px;
-    background: #4f46e5;
-    color: white;
-    font-weight:bold;
-    font-size: 15px;
-    cursor: pointer;
-}
-button:hover{
-    background: #3b32c6;
-}
-.UserBubble{
-    background-color: #2a2a2a;
-    color:#ffffff;
-    padding: 12px 15px;
-    border-radius: 8px;
-    width: fit-content;
-    max-width: 60%;
-    line-height: 1.3;
-    align-self: flex-end;
-}
-
-#status{
-    display: block;
-    font-size: 20px;
-    margin: 20px;
-}
-.Thinking{
-    display: none;
-    background-color:white;
-    color: #2a2a2a;
-    padding: 12px 15px;
-    border-radius: 8px;
-    width: fit-content;
-    max-width: 70%;
-    line-height: 1.4;
-    align-self: flex-start;
-    flex-direction: column;
-    font-style: italic;
+.feature:hover{
+    border-color: purple;
+    transition: border-color 0.3s ease-in-out;
 }
