@@ -1,5 +1,15 @@
 let input = document.getElementById("input")
-let discussion = []
+let discussion = JSON.parse(localStorage.getItem("Sylqoramemory")) || []
+window.addEventListener("DOMContentLoaded", () => {
+    let chatcontainer = document.querySelector(".Chat");
+    discussion.forEach(msg => {
+        let msgDiv = document.createElement("div");
+        msgDiv.className = msg.role === "user" ? "UserBubble" : "Botmsg";
+        msgDiv.innerHTML = Markdown(msg.content);
+        chatcontainer.append(msgDiv);
+    });
+    chatcontainer.scrollTop = chatcontainer.scrollHeight;
+})
 function Markdown (text){
     if (!text) return"";
     let formatted = text
@@ -10,6 +20,22 @@ function Markdown (text){
         .replace(/\*(.*?)\*/g, '<i>$1</i>')
         .replace(/\n/g, '<br>')
     return formatted;
+}
+function    Savediscussion() {
+    localStorage.setItem("Sylqoramemory", JSON.stringify(discussion));
+}
+function ClearDiscussion() {
+    localStorage.removeItem("Sylqoramemory");
+    discussion = [];
+    let chat = document.querySelector(".Chat");
+    let thinking = document.querySelector(".Thinking");
+    chat.innerHTML = "";
+    if (thinking) {
+        thinking.style.display = "none";
+    
+        chat.append(thinking);
+    }
+    
 }
 async function sendMessage(){
 let Message = input.value.trim()
@@ -25,10 +51,15 @@ let thinking = document.querySelector(".Thinking")
 newMsg.append(thinking)
 thinking.style.display = "flex"
 newMsg.scrollTop = newMsg.scrollHeight;
-let answer = await toServer(Message)
+
+let answer = await toServer(Message);
 discussion.push({role: "user", content: Message})
 discussion.push({role:"assistant", content:answer})
-thinking.style.display = "none"
+Savediscussion();
+if (thinking){
+    thinking.style.display = "none"
+}
+
 sendBotMessage(answer)
 }
 input.addEventListener("keydown",(enter) => {
@@ -52,14 +83,14 @@ async function toServer(message){
     let msgData = {
         message: message,
         history: discussion
-    }
+    };
     let response = await fetch("/api/chat",{
         method : "POST",   
         headers : {
             "Content-Type":"application/json"
         },
         body : JSON.stringify(msgData)
-    })
+    });
     let data = await response.json()
     console.log("API data:" ,data)
     return data.Reply
