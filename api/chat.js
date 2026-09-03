@@ -9,6 +9,8 @@ module.exports = async (req, res) => {
     try {
         const message = req.body?.message
         const history = req.body?.history || []
+        console.log("History recieved" , history)
+        console.log("Message recieved" , message)
         if (!message) {
             return res.status(400).json({
                 error: "No message received"
