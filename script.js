@@ -1,4 +1,5 @@
 let input = document.getElementById("input")
+let discussion = []
 function Markdown (text){
     if (!text) return"";
     let formatted = text
@@ -13,6 +14,7 @@ function Markdown (text){
 async function sendMessage(){
 let Message = input.value.trim()
 if (!Message) return;
+discussion.push({role: "user", content: Message})
 let newMsg = document.querySelector(".Chat")
 let userMsg = document.createElement("div")
 userMsg.className = "UserBubble"
@@ -24,6 +26,7 @@ newMsg.append(thinking)
 thinking.style.display = "flex"
 newMsg.scrollTop = newMsg.scrollHeight;
 let answer = await toServer(Message)
+discussion.push({role:"assistant", content:answer})
 thinking.style.display = "none"
 sendBotMessage(answer)
 }
@@ -46,7 +49,8 @@ function sendBotMessage(answer){
 
 async function toServer(message){
     let msgData = {
-        message: message
+        message: message,
+        history: discussion
     }
     let response = await fetch("/api/chat",{
         method : "POST",   
