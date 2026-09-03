@@ -52,8 +52,7 @@ newMsg.append(thinking)
 thinking.style.display = "flex"
 newMsg.scrollTop = newMsg.scrollHeight;
 
-discussion.push({role: "user", content: Message});
-let answer = await toServer(Message);
+let answer = await toServer(Message, discussion);
 
 if (thinking){
     thinking.style.display = "none"
@@ -64,6 +63,8 @@ if (answer) {
     Savediscussion();
     sendBotMessage(answer);
 
+}else{
+    sendBotMessage("Sorry, I couldn't process your request. Please try again.");
 }
 }
 input.addEventListener("keydown",(enter) => {
