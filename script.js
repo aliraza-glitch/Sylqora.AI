@@ -14,7 +14,7 @@ function Markdown (text){
 async function sendMessage(){
 let Message = input.value.trim()
 if (!Message) return;
-discussion.push({role: "user", content: Message})
+
 let newMsg = document.querySelector(".Chat")
 let userMsg = document.createElement("div")
 userMsg.className = "UserBubble"
@@ -26,6 +26,7 @@ newMsg.append(thinking)
 thinking.style.display = "flex"
 newMsg.scrollTop = newMsg.scrollHeight;
 let answer = await toServer(Message)
+discussion.push({role: "user", content: Message})
 discussion.push({role:"assistant", content:answer})
 thinking.style.display = "none"
 sendBotMessage(answer)
