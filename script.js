@@ -52,15 +52,19 @@ newMsg.append(thinking)
 thinking.style.display = "flex"
 newMsg.scrollTop = newMsg.scrollHeight;
 
+discussion.push({role: "user", content: Message});
 let answer = await toServer(Message);
-discussion.push({role: "user", content: Message})
-discussion.push({role:"assistant", content:answer})
-Savediscussion();
+
 if (thinking){
     thinking.style.display = "none"
 }
+if (answer) {
+    discussion.push({role: "user", content: Message});
+    discussion.push({role: "assistant", content: answer});
+    Savediscussion();
+    sendBotMessage(answer);
 
-sendBotMessage(answer)
+}
 }
 input.addEventListener("keydown",(enter) => {
     if (enter.key == "Enter"){
@@ -79,10 +83,10 @@ function sendBotMessage(answer){
 
 
 
-async function toServer(message){
+async function toServer(message, history){
     let msgData = {
         message: message,
-        history: discussion
+        history: history
     };
     let response = await fetch("/api/chat",{
         method : "POST",   
