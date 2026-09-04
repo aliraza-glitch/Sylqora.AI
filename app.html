@@ -7,6 +7,12 @@
     <title>Chatbot</title>
 </head>
 <body>
+    <div class = "sidebar">
+        <button class = "newchat" onclick="ClearDiscussion()"> + New Chat</button>
+        <h3>Recent Chats</h3>
+        <div class = "list" ></div>
+    </div>
+    <div class = "main">
     <header>
     <h1>Sylqora AI</h1>
     <p class="hero">Your go to study companion</p>
@@ -19,12 +25,13 @@
     <div class="Thinking">
         <p>Sylqora is thinking...</p>
     </div>
+
     </div>
     <div class="input">
         <input type="text"   id="input"   placeholder="Ask Sylqora anything ..." >
         <button onclick="sendMessage()">Send</button>
     </div>
-
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

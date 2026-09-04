@@ -115,3 +115,22 @@ button:hover{
     flex-direction: column;
     font-style: italic;
 }
+.sidebar{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 250px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-right: 1px solid #333;
+}
+.main{
+    margin-left: 240px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}

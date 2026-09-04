@@ -1,5 +1,6 @@
 let input = document.getElementById("input")
 let discussion = JSON.parse(localStorage.getItem("Sylqoramemory")) || []
+let chats = JSON.parse(localStorage.getItem("Sylqorachats")) || []
 window.addEventListener("DOMContentLoaded", () => {
     let chatcontainer = document.querySelector(".Chat");
     discussion.forEach(msg => {
@@ -9,6 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
         chatcontainer.append(msgDiv);
     });
     chatcontainer.scrollTop = chatcontainer.scrollHeight;
+    Displaychats();
 })
 function Markdown (text){
     if (!text) return"";
@@ -23,8 +25,22 @@ function Markdown (text){
 }
 function    Savediscussion() {
     localStorage.setItem("Sylqoramemory", JSON.stringify(discussion));
+
+}
+function Savechats() {
+    localStorage.setItem("Sylqorachats", JSON.stringify(chats));
 }
 function ClearDiscussion() {
+    if (discussion.length > 0){
+        let savedchat = {
+            id: Date.now(),
+            title: discussion[0].content,
+            messages: discussion
+        }
+        chats.push(savedchat);
+        Savechats();
+        Displaychats();
+    }
     localStorage.removeItem("Sylqoramemory");
     discussion = [];
     let chat = document.querySelector(".Chat");
@@ -35,7 +51,18 @@ function ClearDiscussion() {
     
         chat.append(thinking);
     }
+    sendBotMessage("Hey there! Ask me anything");
     
+}
+function Displaychats(){
+    let chatlist = document.querySelector(".list");
+    chatlist.innerHTML = "";
+    chats.forEach(chat =>{
+        let chatpiece = document.createElement("div")
+        chatpiece.textContent = chat.title;
+        chatlist.append(chatpiece)
+    })
+
 }
 async function sendMessage(){
 let Message = input.value.trim()
