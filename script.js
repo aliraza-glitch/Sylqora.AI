@@ -1,8 +1,10 @@
 let input = document.getElementById("input")
 let discussion = JSON.parse(localStorage.getItem("Sylqoramemory")) || []
 let chats = JSON.parse(localStorage.getItem("Sylqorachats")) || []
+let currentchatid = localStorage.getItem("SylqoraCurrentChatId") || null;
 window.addEventListener("DOMContentLoaded", () => {
     let chatcontainer = document.querySelector(".Chat");
+
     discussion.forEach(msg => {
         let msgDiv = document.createElement("div");
         msgDiv.className = msg.role === "user" ? "UserBubble" : "Botmsg";
@@ -25,24 +27,51 @@ function Markdown (text){
 }
 function    Savediscussion() {
     localStorage.setItem("Sylqoramemory", JSON.stringify(discussion));
+    if (currentchatid){
+        localStorage.setItem("SylqoraCurrentChatId", currentchatid);
+    }else{
+        localStorage.removeItem("SylqoraCurrentChatId")
+    }
 
 }
 function Savechats() {
     localStorage.setItem("Sylqorachats", JSON.stringify(chats));
 }
-function ClearDiscussion() {
-    if (discussion.length > 0){
-        let savedchat = {
-            id: Date.now(),
-            title: discussion[0].content,
-            messages: discussion
+function Autosave(){
+    if (discussion.length === 0)return;
+    let firstmsg = discussion.find(m => m.role === "user");
+    let chattitle = firstmsg?firstmsg.content: "New Conversation";
+    let messagesCopy = [...discussion]
+    if (!currentchatid){
+        currentchatid = Date.now().toString();
+        let newChat = {
+            id : currentchatid,
+            title: chattitle,
+            messages: messagesCopy
+        };
+        chats.push(newChat);
+    }else{
+        let existing = chats.find(c=> c.id === currentchatid)
+        if (existing ){
+            existing.messages = messagesCopy;
+            existing.title = chattitle 
+        }else{
+            chats.push({id:currentchatid, title: chattitle, messages: messagesCopy});
         }
-        chats.push(savedchat);
-        Savechats();
-        Displaychats();
     }
-    localStorage.removeItem("Sylqoramemory");
+    Savediscussion();
+    Savechats();
+    Displaychats();
+}
+
+function ClearDiscussion() {
+    if (discussion.some(m => m.role === "user")){
+        Autosave();
+    }
     discussion = [];
+    currentchatid = null ;
+    Savediscussion();
+    
     let chat = document.querySelector(".Chat");
     let thinking = document.querySelector(".Thinking");
     chat.innerHTML = "";
@@ -51,8 +80,10 @@ function ClearDiscussion() {
     
         chat.append(thinking);
     }
-    sendBotMessage("Hey there! Ask me anything");
-    
+    let welcometxt = "Hey there ! Ready to dive in?"
+    discussion.push({role:"assistant", content : welcometxt})
+    Savediscussion();
+    sendBotMessage(welcometxt);
 }
 function Displaychats(){
     let chatlist = document.querySelector(".list");
@@ -63,10 +94,14 @@ function Displaychats(){
         let chatpiece = document.createElement("div")
         chatpiece.className = "chatpiece";
         chatpiece.textContent = chat.title;
-        chatlist.append(chatpiece)
+        if (chat.id == currentchatid){
+            chatpiece.classList.add("active");
+        }
+    
         chatpiece.onclick = () => {
 
-        discussion = chat.messages;
+        currentchatid = chat.id;
+        discussion = [...chat.messages];
         Savediscussion();
         let chatcontainer = document.querySelector(".Chat")
         chatcontainer.innerHTML=""
@@ -81,10 +116,13 @@ function Displaychats(){
             chatcontainer.append(msgdiv);
         })
         chatcontainer.scrollTop = chatcontainer.scrollHeight;
+        Displaychats();
 
 }
+chatlist.append(chatpiece);
 })
 }
+
 async function sendMessage(){
 let Message = input.value.trim()
 if (!Message) return;
@@ -96,8 +134,10 @@ userMsg.innerHTML = Markdown(Message)
 newMsg.append(userMsg)
 input.value = ""
 let thinking = document.querySelector(".Thinking")
-newMsg.append(thinking)
-thinking.style.display = "flex"
+if (thinking){
+    newMsg.append(thinking);
+    thinking.style.display = "flex";
+}
 newMsg.scrollTop = newMsg.scrollHeight;
 
 let answer = await toServer(Message, discussion);
@@ -110,13 +150,13 @@ if (answer) {
     discussion.push({role: "assistant", content: answer});
     Savediscussion();
     sendBotMessage(answer);
-
+    Autosave();
 }else{
     sendBotMessage("Sorry, I couldn't process your request. Please try again.");
 }
 }
 input.addEventListener("keydown",(enter) => {
-    if (enter.key == "Enter"){
+    if (enter.key === "Enter"){
         sendMessage();
     }
 })
@@ -137,6 +177,7 @@ async function toServer(message, history){
         message: message,
         history: history
     };
+    
     let response = await fetch("/api/chat",{
         method : "POST",   
         headers : {
@@ -146,6 +187,7 @@ async function toServer(message, history){
     });
     let data = await response.json()
     console.log("API data:" ,data)
-    return data.Reply
+    return data.Reply;
+
 }
 
