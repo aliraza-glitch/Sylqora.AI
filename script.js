@@ -56,13 +56,34 @@ function ClearDiscussion() {
 }
 function Displaychats(){
     let chatlist = document.querySelector(".list");
+    let thinking = document.querySelector(".Thinking")
     chatlist.innerHTML = "";
+    if (thinking ){
+        thinking.style.display = "none";
+        chatcontainer.append(thinking)
+    }
     chats.forEach(chat =>{
+        
         let chatpiece = document.createElement("div")
+        chatpiece.className = "chatpiece";
         chatpiece.textContent = chat.title;
         chatlist.append(chatpiece)
-    })
+        chatpiece.onclick = () => {
 
+        discussion = chat.messages;
+        Savediscussion();
+        let chatcontainer = document.querySelector(".Chat")
+        chatcontainer.innerHTML=""
+        discussion.forEach (msg =>{
+            let msgdiv = document.createElement("div");
+            msgdiv.className = msg.role === "user"?"UserBubble":"Botmsg";
+            msgdiv.innerHTML = Markdown(msg.content);
+            chatcontainer.append(msgdiv);
+        })
+        chatcontainer.scrollTop = chatcontainer.scrollHeight;
+
+}
+})
 }
 async function sendMessage(){
 let Message = input.value.trim()
