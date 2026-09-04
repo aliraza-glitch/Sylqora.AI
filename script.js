@@ -58,12 +58,8 @@ function Displaychats(){
     let chatlist = document.querySelector(".list");
     let thinking = document.querySelector(".Thinking")
     chatlist.innerHTML = "";
-    if (thinking ){
-        thinking.style.display = "none";
-        chatcontainer.append(thinking)
-    }
+    
     chats.forEach(chat =>{
-        
         let chatpiece = document.createElement("div")
         chatpiece.className = "chatpiece";
         chatpiece.textContent = chat.title;
@@ -74,6 +70,10 @@ function Displaychats(){
         Savediscussion();
         let chatcontainer = document.querySelector(".Chat")
         chatcontainer.innerHTML=""
+        if (thinking){
+            thinking.style.display = "none";
+            chatcontainer.append(thinking);
+        }
         discussion.forEach (msg =>{
             let msgdiv = document.createElement("div");
             msgdiv.className = msg.role === "user"?"UserBubble":"Botmsg";
