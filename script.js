@@ -47,7 +47,7 @@ function Savechats() {
 function Autosave(){
     if (discussion.length === 0)return;
     let firstmsg = discussion.find(m => m.role === "user");
-    let chattitle = firstmsg?firstmsg.content: "New Conversation";
+    let chattitle = firstmsg?firstmsg.content.slice(0,35): "New Conversation";
     let messagesCopy = [...discussion]
     if (!currentchatid){
         currentchatid = Date.now().toString();
@@ -235,7 +235,7 @@ async function toServer(message, history){
         message: message,
         history: history
     };
-    
+    try{
     let response = await fetch("/api/chat",{
         method : "POST",   
         headers : {
@@ -243,9 +243,16 @@ async function toServer(message, history){
         },
         body : JSON.stringify(msgData)
     });
+    if(!response.ok){
+        throw new Error(`HTTP error: ${response.status}`)
+    }
     let data = await response.json()
     console.log("API data:" ,data)
     return data.Reply;
+}catch(error){
+    console.error("Server error:", error);
+    return null;
 
+}
 }
 

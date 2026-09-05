@@ -100,9 +100,10 @@ button:hover{
 }
 .Thinking{
     display: none;
-    background-color:white;
-    color: #2a2a2a;
+    background-color:#1e1e1e;
+    color: #bdbdbd;
     padding: 12px 15px;
+    border: 1px solid #333;
     border-radius: 8px;
     width: fit-content;
     max-width: 70%;
@@ -233,4 +234,13 @@ button:hover{
     flex-direction: column;
     gap: 6px;
     transition: 0.2s ease;
+}
+.chatpiece.active{
+    background-color: #302330;
+    border-left: 3px solid rgb(139, 65, 139);
+}
+.list{
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
 }
