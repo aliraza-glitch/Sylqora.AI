@@ -28,7 +28,9 @@ function Markdown (text){
         .replace(/>/g, "&gt;")
         .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
         .replace(/\*(.*?)\*/g, '<i>$1</i>')
-        .replace(/\n/g, '<br>')
+        .replace(/^\s*-\s+(.*)$/gmol, '<li>$1</li>')
+        .replace(/\n\n/g, '<br><br>')             
+        .replace(/\n/g, '<br>');
     return formatted;
 }
 function    Savediscussion() {
