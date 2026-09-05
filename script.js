@@ -28,8 +28,7 @@ function Markdown (text){
         .replace(/>/g, "&gt;")
         .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
         .replace(/\*(.*?)\*/g, '<i>$1</i>')
-        .replace(/^\s*-\s+(.*)$/gmol, '<li>$1</li>')
-        .replace(/\n\n/g, '<br><br>')             
+        .replace(/^\s*-\s+(.*)$/gm, '<li>$1</li>') 
         .replace(/\n/g, '<br>');
     return formatted;
 }
