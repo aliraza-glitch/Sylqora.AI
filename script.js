@@ -159,11 +159,12 @@ userMsg.className = "UserBubble"
 userMsg.innerHTML = Markdown(Message)
 newMsg.append(userMsg)
 input.value = ""
-let activeChatIdatSend = currentchatid;
+
 let historyShot = [...discussion]
 discussion.push({role: "user", content:Message});
 Savediscussion();
 Autosave();
+let activeChatIdatSend = currentchatid;
 let thinking = document.querySelector(".Thinking")
 if (thinking){
     newMsg.append(thinking);
