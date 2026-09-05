@@ -8,20 +8,35 @@
 </head>
 <body>
     <div class = "sidebar">
+        <div  class="sidebrand"> 
+            <span>✦</span>
+            <div>
+                <h2>Sylqora</h2>
+                <p>Study Companion</p>
+            </div>
+        </div>
         <button class = "newchat" onclick="ClearDiscussion()"> + New Chat</button>
         <h3>Recent Chats</h3>
         <div class = "list" ></div>
     </div>
     <div class = "main">
-    <header>
-    <h1>Sylqora AI</h1>
-    <p class="hero">Your go to study companion</p>
-    </header>
-    <div class="Chat">
-        <div class="Botmsg">
-            <p class="Botmesg">Hey there! Ask me anything</p>
-        </div>
     
+    <div class="Chat">
+        
+    <div class = "welcometxt">
+        <h2>What are we learning today?</h2>
+        <p>Ask a question, revise a topic, or work through a problem</p>
+        <div class="suggestions">
+        <div class = "suggestion" onclick="ExplainConcept()">
+            <strong>✦ Explain a concept</strong>
+            <span>Break down a confusing topic</span>
+        </div>
+        <div class="suggestion" onclick="Quizme()">
+            <strong>?</strong>
+            <span>Quiz me on a topic</span>
+        </div>
+    </div>
+    </div>
     <div class="Thinking">
         <p>Sylqora is thinking...</p>
     </div>
@@ -29,7 +44,7 @@
     </div>
     <div class="input">
         <input type="text"   id="input"   placeholder="Ask Sylqora anything ..." >
-        <button onclick="sendMessage()">Send</button>
+        <button class="sendbtn"   onclick="sendMessage()">➤</button>
     </div>
     </div>
     <script src="script.js"></script>

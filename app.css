@@ -10,17 +10,7 @@ body{
     display: flex;
     flex-direction: column;
 }
-header{
-    background-color: #1e1e1e;
-    padding: 20px;
-    border-bottom: 1px solid #ccc;
-    text-align: center;
-}
-h1{
-    color:#ffffff;
-    font-size: 24px;
-    margin-bottom: 5px;
-}
+
 .hero{
     color:#d3d3d3;
     font-size: 14px;
@@ -28,7 +18,7 @@ h1{
 .Chat{
     width: 90%;
     max-width: 800px;
-    margin: 20px auto;
+    margin: 32px auto 20px;
     flex: 1;
     display: flex;
     gap: 16px;
@@ -36,14 +26,15 @@ h1{
     flex-direction: column;
 }
 .Botmsg{
-    background-color: #ffffff;
-    color:#2a2a2a;
+    background-color: #1e1e1e;
+    color:#eeeeee;
     padding: 12px 15px;
-    border-radius: 8px;
+    border-radius: 14px 14px 14px 4px;
     width: fit-content;
     max-width: 70%;
     line-height: 1.4;
     align-self: flex-start;
+    border: 1px solid #333;
 
 }
 .Botmesg{
@@ -55,14 +46,18 @@ h1{
     margin: 0 auto 20px;
     display: flex;
     gap: 10px;
+    background-color: #1a1a1a;
+    padding: 6px 6px 6px 14px;
+    border: 1px solid #2f2f2f;
+    border-radius: 28px;
 }
 .input input{
     flex:1;
     padding : 12px 15px;
-    border: 1px solid #333;
+    border: none;
     border-radius: 9px;
     font-size: 15px;
-    background-color: #1e1e1e;
+    background-color: transparent;
     color: white;
     
 }
@@ -70,27 +65,28 @@ h1{
     color: #777;
 }
 .input input:focus{
-    border-color: #4f46e5;
+    border-color: #e284e2;
     outline: none;
 }
 button{
     padding: 0 20px;
     border: none;
     border-radius: 7px;
-    background: #4f46e5;
+    background: rgb(139,65,139);
     color: white;
     font-weight:bold;
     font-size: 15px;
     cursor: pointer;
+    
 }
 button:hover{
-    background: #3b32c6;
+    background: rgb(97, 45, 97);
 }
 .UserBubble{
-    background-color: #2a2a2a;
+    background-color: rgb(139, 65, 139);
     color:#ffffff;
     padding: 12px 15px;
-    border-radius: 8px;
+    border-radius: 14px 14px 4px 14px;
     width: fit-content;
     max-width: 60%;
     line-height: 1.3;
@@ -118,7 +114,7 @@ button:hover{
 .sidebar{
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 14px;
     width: 250px;
     position: fixed;
     left: 0;
@@ -136,22 +132,105 @@ button:hover{
     min-height: 100vh;
 }
 .chatpiece{
-    padding: 10px 20px;
+    padding: 10px 12px;
     border-radius: 6px;
     cursor: pointer;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-
+    transition: background-color 0.2s ease, transform 0.2s ease;
 
 }
 .chatpiece:hover{
     background-color: #2a2a2a;
+    transform: translateX(3px);
 
 }
 .sidebar h3{
-    font-size: 14px;
-    color: #a3a3a3;
-    margin-bottom: 5px;
+    font-size: 12px;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 6px;
     
+}
+.sendbtn{
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border-radius: 50%;
+    transition: 0.2s ease;
+}
+.sendbtn:hover{
+    transform: scale(1.2);
+}
+.newchat{
+    width: 100%;
+    height: 42px;
+    border-radius: 10px;
+    margin-top: 6px;
+}
+.sidebrand{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.sidebrand span{
+    font-size: 24px;
+}
+.sidebrand h2{
+    font-size: 18px;
+    margin-bottom: 2px;
+}
+.sidebrand p{
+    font-size: 12px;
+    color: #999;
+}
+.welcometxt{
+    margin: auto;
+    text-align: center;
+    color: #eeeeee;
+}
+.welcometxt h2{
+    font-size: 28px;
+    margin-bottom: 8px;
+    color: #f1e8f1;
+}
+.welcometxt p{
+    color: #a8a0a8;
+    font-size: 14px;
+}
+.suggestions{
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    justify-content: center;
+    
+
+}
+.suggestion strong{
+    font-size: 14px;
+    color: #eeeeee;
+}
+.suggestion span{
+    font-size: 12px;
+    color: #999;
+    line-height: 1.4;
+}
+.suggestion:hover{
+    border-color: rgb(139, 65, 139);
+    transform: translateY(-2px);
+}
+.suggestion{
+    background-color: #1a1a1a;
+    border: 1px solid #303030;
+    border-radius: 12px;
+    padding: 14px 16px;
+    width: 230px;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: 0.2s ease;
 }

@@ -74,16 +74,18 @@ function ClearDiscussion() {
     
     let chat = document.querySelector(".Chat");
     let thinking = document.querySelector(".Thinking");
-    chat.innerHTML = "";
+    let welcome = document.querySelector(".welcometxt");
+    let messages = chat.querySelectorAll(".UserBubble", ".Botmsg");
+    messages.forEach(msg => msg.remove())
+    if(welcome){
+        welcome.style.display = "block"
+    }
     if (thinking) {
         thinking.style.display = "none";
     
         chat.append(thinking);
     }
-    let welcometxt = "Hey there ! Ready to dive in?"
-    discussion.push({role:"assistant", content : welcometxt})
-    Savediscussion();
-    sendBotMessage(welcometxt);
+    
 }
 function Displaychats(){
     let chatlist = document.querySelector(".list");
@@ -122,11 +124,21 @@ function Displaychats(){
 chatlist.append(chatpiece);
 })
 }
-
+function ExplainConcept(){
+    input.value = "Explain ";
+    input.focus();
+}
+function Quizme(){
+    input.value = "Quiz me on ";
+    input.focus();
+}
 async function sendMessage(){
 let Message = input.value.trim()
 if (!Message) return;
-
+let welcome = document.querySelector(".welcometxt")
+if(welcome){
+    welcome.style.display = "none";
+}
 let newMsg = document.querySelector(".Chat")
 let userMsg = document.createElement("div")
 userMsg.className = "UserBubble"
