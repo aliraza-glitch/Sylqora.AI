@@ -4,6 +4,12 @@ let chats = JSON.parse(localStorage.getItem("Sylqorachats")) || []
 let currentchatid = localStorage.getItem("SylqoraCurrentChatId") || null;
 window.addEventListener("DOMContentLoaded", () => {
     let chatcontainer = document.querySelector(".Chat");
+    let welcome = document.querySelector(".welcometxt")
+    if (discussion.length > 0 && welcome){
+        welcome.style.display = "none";
+    }
+
+    
 
     discussion.forEach(msg => {
         let msgDiv = document.createElement("div");
@@ -75,21 +81,21 @@ function ClearDiscussion() {
     let chat = document.querySelector(".Chat");
     let thinking = document.querySelector(".Thinking");
     let welcome = document.querySelector(".welcometxt");
-    let messages = chat.querySelectorAll(".UserBubble", ".Botmsg");
+
+    let messages = chat.querySelectorAll(".UserBubble, .Botmsg");
     messages.forEach(msg => msg.remove())
     if(welcome){
         welcome.style.display = "block"
     }
     if (thinking) {
         thinking.style.display = "none";
-    
-        chat.append(thinking);
+
     }
-    
+    Displaychats();
 }
 function Displaychats(){
     let chatlist = document.querySelector(".list");
-    let thinking = document.querySelector(".Thinking")
+    
     chatlist.innerHTML = "";
     
     chats.forEach(chat =>{
@@ -106,10 +112,17 @@ function Displaychats(){
         discussion = [...chat.messages];
         Savediscussion();
         let chatcontainer = document.querySelector(".Chat")
-        chatcontainer.innerHTML=""
+        let welcome = document.querySelector(".welcometxt");  
+        let thinking = document.querySelector(".Thinking")
+        
+        let messages = chatcontainer.querySelectorAll(".UserBubble, .Botmsg");
+        messages.forEach(msg => msg.remove());
+        if (welcome){
+            welcome.style.display = discussion.length === 0?"block":"none";
+        }
         if (thinking){
             thinking.style.display = "none";
-            chatcontainer.append(thinking);
+            
         }
         discussion.forEach (msg =>{
             let msgdiv = document.createElement("div");
@@ -145,6 +158,11 @@ userMsg.className = "UserBubble"
 userMsg.innerHTML = Markdown(Message)
 newMsg.append(userMsg)
 input.value = ""
+let activeChatIdatSend = currentchatid;
+let historyShot = [...discussion]
+discussion.push({role: "user", content:Message});
+Savediscussion();
+Autosave();
 let thinking = document.querySelector(".Thinking")
 if (thinking){
     newMsg.append(thinking);
@@ -152,19 +170,45 @@ if (thinking){
 }
 newMsg.scrollTop = newMsg.scrollHeight;
 
-let answer = await toServer(Message, discussion);
+let answer = await toServer(Message, historyShot);
 
 if (thinking){
     thinking.style.display = "none"
 }
+if (currentchatid !== activeChatIdatSend){
+    
+        let tagChat = chats.find(c=>c.id === activeChatIdatSend)
+        if(tagChat){
+            if(answer){
+                tagChat.messages.push({role: "assistant", content: answer});
+            }else{
+            tagChat.messages.pop();
+            }
+            Savechats();
+        }
+    return;
+}
 if (answer) {
-    discussion.push({role: "user", content: Message});
+    
     discussion.push({role: "assistant", content: answer});
     Savediscussion();
     sendBotMessage(answer);
     Autosave();
 }else{
-    sendBotMessage("Sorry, I couldn't process your request. Please try again.");
+    userMsg.remove();
+    discussion.pop();
+    Savediscussion();
+    if (discussion.length>0){
+        Autosave();
+    }else if(currentchatid){
+        chats= chats.filter(c => c.id !== currentchatid);
+        currentchatid = null;
+        Savediscussion();
+        Savechats();
+        Displaychats();
+    }
+    sendBotMessage("Sorry, I couldn't process your request. Please try again")
+
 }
 }
 input.addEventListener("keydown",(enter) => {
