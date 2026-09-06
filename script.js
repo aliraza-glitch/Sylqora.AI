@@ -211,12 +211,13 @@ if (currentchatid !== activeChatIdatSend){
 }
 if (answer) {
     if (answer.includes("[RESULT: CORRECT")){
-        quizscore += 1
-        .replace("[RESULT: CORRECT]", "")
-        .replace("[RESULT: INCORRECT]", "")
+        quizscore += 1;
     }
+    answer = answer 
+    .replace("[RESULT: CORRECT]", "")
+    .replace("[RESULT: INCORRECT", "")
     if (quizmode && quizquestion == 5){
-        answer += "/n/n**Quiz complete - Score: " + quizscore + "/5**"
+        answer += "\n\n**Quiz complete - Score: " + quizscore + "/5**"
         quizmode = false
         quiztopic = ""
         quizquestion = 0
