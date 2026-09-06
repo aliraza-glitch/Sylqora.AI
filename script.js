@@ -148,6 +148,7 @@ function ExplainConcept(){
 }
 function Quizme(){
     quizmode = true;
+    quizscore = 0
     input.value = ""
     input.placeholder = "What should I quiz you on ?"
     input.focus();
@@ -161,10 +162,10 @@ if(quizmode && quiztopic === ""){
     quizquestion = 1
     Message = "Start a quiz on " + quiztopic + ". Ask me one question only. Don't give the answer"
 }else if (quizmode && quizquestion > 0 && quizquestion < 5){
-    Message = "My answer is: " + Message + ". Check my answer,At the very end of your response, write exactly [RESULT: CORRECT] if it is correct or [RESULT: INCORRECT] if it is wrong, briefly explain whether it is correct, then ask me the next question on " + quiztopic + "."
+    Message = "My answer is: " + Message + ". Check my answer. Respond naturally and briefly, like a teacher marking a student's answer. Avoid phrases like Great job, spot on, or you captured the core idea. Say correct, partially correct, or incorrect, explain the key point in 1-3 sentences, then ask the next question on " + quiztopic + ". At the very end, write exactly [RESULT: CORRECT] if my answer is correct or [RESULT: INCORRECT] if it is wrong.";
     quizquestion += 1
 }else if(quizmode && quizquestion === 5){
-    Message = "My answer is " + Message + ". Check my final answer, At the very end of your response, write exactly [RESULT: CORRECT] if it is correct or [RESULT: INCORRECT] if it is wrong, briefly explain whether it is correct , then end the quiz. Do not ask another question"
+    Message = "My answer is: " + Message + ". Check my answer. Respond naturally and briefly, like a teacher marking a student's answer. Avoid phrases like Great job, spot on, or you captured the core idea. Say correct, partially correct, or incorrect, explain the key point in 1-3 sentences, then ask the next question on " + quiztopic + ". At the very end, write exactly [RESULT: CORRECT] if my answer is correct or [RESULT: INCORRECT] if it is wrong.";
     quizquestion += 1
 }
 let welcome = document.querySelector(".welcometxt")
@@ -213,7 +214,7 @@ if (answer) {
     if (answer.includes("[RESULT: CORRECT")){
         quizscore += 1;
     }
-    answer = answer 
+    answer = answer.replace(/\[RESULT:\s*(CORRECT|INCORRECT)\s*\]/gi, "");
     .replace("[RESULT: CORRECT]", "")
     .replace("[RESULT: INCORRECT", "")
     if (quizmode && quizquestion == 6){
