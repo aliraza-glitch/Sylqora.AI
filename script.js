@@ -154,20 +154,18 @@ function Quizme(){
 }
 async function sendMessage(){
 let Message = input.value.trim()
+let displayMessage = Message;
 if (!Message) return;
 if(quizmode && quiztopic === ""){
     quiztopic = Message
     quizquestion = 1
     Message = "Start a quiz on " + quiztopic + ". Ask me one question only. Don't give the answer"
 }else if (quizmode && quizquestion > 0 && quizquestion < 5){
-    Message = "My answer is: " + Message + ". Check my answer, briefly explain whether it is correct, then ask me the next question on " + quiztopic + "."
+    Message = "My answer is: " + Message + ". Check my answer,At the very end of your response, write exactly [RESULT: CORRECT] if it is correct or [RESULT: INCORRECT] if it is wrong, briefly explain whether it is correct, then ask me the next question on " + quiztopic + "."
     quizquestion += 1
 }else if(quizmode && quizquestion === 5){
-    Message = "My answer is " + Message + ". Check my final answer, briefly explain whether it is correct , then end the quiz. Do not ask another question"
-    quizmode = false
-    quiztopic = "";
-    quizquestion = 0
-    input.placeholder = "Ask Sylqora anything ...";
+    Message = "My answer is " + Message + ". Check my final answer, At the very end of your response, write exactly [RESULT: CORRECT] if it is correct or [RESULT: INCORRECT] if it is wrong, briefly explain whether it is correct , then end the quiz. Do not ask another question"
+    
 }
 let welcome = document.querySelector(".welcometxt")
 if(welcome){
@@ -176,13 +174,13 @@ if(welcome){
 let newMsg = document.querySelector(".Chat")
 let userMsg = document.createElement("div")
 userMsg.className = "UserBubble"
-userMsg.innerHTML = Markdown(Message)
+userMsg.innerHTML = Markdown(displayMessage)
 newMsg.append(userMsg)
 input.value = ""
 input.style.height = "44px"
 
 let historyShot = [...discussion]
-discussion.push({role: "user", content:Message});
+discussion.push({role: "user", content:displayMessage});
 Savediscussion();
 Autosave();
 let activeChatIdatSend = currentchatid;
@@ -212,7 +210,18 @@ if (currentchatid !== activeChatIdatSend){
     return;
 }
 if (answer) {
-    
+    if (answer.includes("[RESULT: CORRECT")){
+        quizscore += 1
+        .replace("[RESULT: CORRECT]", "")
+        .replace("[RESULT: INCORRECT]", "")
+    }
+    if (quizmode && quizquestion == 5){
+        answer += "/n/n**Quiz complete - Score: " + quizscore + "/5**"
+        quizmode = false
+        quiztopic = ""
+        quizquestion = 0
+        input.placeholder = "Ask Sylqora anything"
+    }
     discussion.push({role: "assistant", content: answer});
     Savediscussion();
     sendBotMessage(answer);
