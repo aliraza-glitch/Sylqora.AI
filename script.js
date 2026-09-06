@@ -165,7 +165,7 @@ if(quizmode && quiztopic === ""){
     quizquestion += 1
 }else if(quizmode && quizquestion === 5){
     Message = "My answer is " + Message + ". Check my final answer, At the very end of your response, write exactly [RESULT: CORRECT] if it is correct or [RESULT: INCORRECT] if it is wrong, briefly explain whether it is correct , then end the quiz. Do not ask another question"
-    
+    quizquestion += 1
 }
 let welcome = document.querySelector(".welcometxt")
 if(welcome){
@@ -216,7 +216,7 @@ if (answer) {
     answer = answer 
     .replace("[RESULT: CORRECT]", "")
     .replace("[RESULT: INCORRECT", "")
-    if (quizmode && quizquestion == 5){
+    if (quizmode && quizquestion == 6){
         answer += "\n\n**Quiz complete - Score: " + quizscore + "/5**"
         quizmode = false
         quiztopic = ""
