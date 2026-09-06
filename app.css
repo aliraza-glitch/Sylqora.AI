@@ -51,7 +51,7 @@ body{
     border: 1px solid #2f2f2f;
     border-radius: 28px;
 }
-.input input{
+.input textarea{
     flex:1;
     padding : 12px 15px;
     border: none;
@@ -59,12 +59,16 @@ body{
     font-size: 15px;
     background-color: transparent;
     color: white;
-    
+    resize: none;
+    overflow-y: auto;
+    max-height: 140px;
+    line-height: 20px;
+    height: 44px;
 }
-.input input::placeholder{
+.input textarea::placeholder{
     color: #777;
 }
-.input input:focus{
+.input textarea:focus{
     border-color: #e284e2;
     outline: none;
 }
@@ -243,4 +247,14 @@ button:hover{
     overflow-y: auto;
     flex: 1;
     min-height: 0;
+}
+.input textarea::-webkit-scrollbar{
+    width: 8px;
+}
+.input textarea::-webkit-scrollbar-thumb{
+    background: #555;
+    border-radius: 10px;
+}
+.input textarea::-webkit-scrollbar-track{
+    background: #1a1a1a;
 }

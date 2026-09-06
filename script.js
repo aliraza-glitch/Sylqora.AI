@@ -1,4 +1,8 @@
 let input = document.getElementById("input")
+let quizmode = false
+let quiztopic = ""
+let quizquestion = 0
+let quizscore = 0
 let discussion = JSON.parse(localStorage.getItem("Sylqoramemory")) || []
 let chats = JSON.parse(localStorage.getItem("Sylqorachats")) || []
 let currentchatid = localStorage.getItem("SylqoraCurrentChatId") || null;
@@ -143,12 +147,18 @@ function ExplainConcept(){
     input.focus();
 }
 function Quizme(){
-    input.value = "Quiz me on ";
+    quizmode = true;
+    input.value = ""
+    input.placeholder = "What should I quiz you on ?"
     input.focus();
 }
 async function sendMessage(){
 let Message = input.value.trim()
 if (!Message) return;
+if(quizmode && quiztopic === ""){
+    quiztopic = Message
+    Message = "Start a quiz on " + quiztopic + ". Ask me one question only. Don't give the answer"
+}
 let welcome = document.querySelector(".welcometxt")
 if(welcome){
     welcome.style.display = "none";
@@ -159,6 +169,7 @@ userMsg.className = "UserBubble"
 userMsg.innerHTML = Markdown(Message)
 newMsg.append(userMsg)
 input.value = ""
+input.style.height = "44px"
 
 let historyShot = [...discussion]
 discussion.push({role: "user", content:Message});
@@ -213,8 +224,21 @@ if (answer) {
 
 }
 }
+input.addEventListener("input", () =>{
+    if (input.value === ""){
+        input.style.height = "44px"
+        return;
+    }
+    input.style.height = "auto";
+    if(input.scrollHeight < 140){
+        input.style.height = input.scrollHeight + "px";
+    }else{
+        input.style.height = "140px"
+    }
+})
 input.addEventListener("keydown",(enter) => {
-    if (enter.key === "Enter"){
+    if (enter.key === "Enter" && !enter.shiftKey){
+        enter.preventDefault();
         sendMessage();
     }
 })
