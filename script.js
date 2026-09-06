@@ -157,7 +157,17 @@ let Message = input.value.trim()
 if (!Message) return;
 if(quizmode && quiztopic === ""){
     quiztopic = Message
+    quizquestion = 1
     Message = "Start a quiz on " + quiztopic + ". Ask me one question only. Don't give the answer"
+}else if (quizmode && quizquestion > 0 && quizquestion < 5){
+    Message = "My answer is: " + Message + ". Check my answer, briefly explain whether it is correct, then ask me the next question on " + quiztopic + "."
+    quizquestion += 1
+}else if(quizmode && quizquestion === 5){
+    Message = "My answer is " + Message + ". Check my final answer, briefly explain whether it is correct , then end the quiz. Do not ask another question"
+    quizmode = false
+    quiztopic = "";
+    quizquestion = 0
+    input.placeholder = "Ask Sylqora anything ...";
 }
 let welcome = document.querySelector(".welcometxt")
 if(welcome){
