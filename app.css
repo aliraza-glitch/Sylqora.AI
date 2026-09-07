@@ -260,4 +260,10 @@ button:hover{
 }
 .quizstatus{
     display: none;
+    justify-content: space-between;
+    align-items: center;
+    color: #bdbdbd;
+    font-size: 13px;
+    padding:8px 12px;
+    border-bottom: 1px solid #303030;
 }
