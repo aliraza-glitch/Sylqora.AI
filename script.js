@@ -175,7 +175,7 @@ if(quizmode && quiztopic === ""){
     let quizstatus = document.querySelector(".quizstatus")
     let topicdisplay = document.querySelector(".quiztopic")
     let progressdisplay = document.querySelector(".quizprogress")
-    quizmode.style.display = "flex"
+    quizstatus.style.display = "flex"
     topicdisplay.textContent = "QUIZ . " + quiztopic;
     progressdisplay.textContent = "Question 1 of 5"
     Message = "Start a quiz on " + quiztopic + ". Ask me one question only. Don't give the answer"
