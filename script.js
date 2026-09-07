@@ -81,6 +81,11 @@ function ClearDiscussion() {
     }
     discussion = [];
     currentchatid = null ;
+    quizmode = false;
+    quiztopic = ""
+    quizquestion = 0
+    quizscore = 0
+    input.placeholder = "Ask Sylqora anything ..."
     Savediscussion();
     
     let chat = document.querySelector(".Chat");
@@ -112,7 +117,12 @@ function Displaychats(){
         }
     
         chatpiece.onclick = () => {
-
+        quizmode = false;
+        quiztopic = ""
+        quizquestion = 0
+        quizscore = 0
+        input.placeholder = "Ask Sylqora anything ..."
+        document.querySelector(".quizstatus").style.display = "none"
         currentchatid = chat.id;
         discussion = [...chat.messages];
         Savediscussion();
@@ -149,6 +159,8 @@ function ExplainConcept(){
 function Quizme(){
     quizmode = true;
     quizscore = 0
+    quizquestion = 0
+    quiztopic = ""
     input.value = ""
     input.placeholder = "What should I quiz you on ?"
     input.focus();
@@ -160,12 +172,19 @@ if (!Message) return;
 if(quizmode && quiztopic === ""){
     quiztopic = Message
     quizquestion = 1
+    let quizstatus = document.querySelector(".quizstatus")
+    let topicdisplay = document.querySelector(".quiztopic")
+    let progressdisplay = document.querySelector(".quizprogress")
+    quizmode.style.display = "flex"
+    topicdisplay.textContent = "QUIZ . " + quiztopic;
+    progressdisplay.textContent = "Question 1 of 5"
     Message = "Start a quiz on " + quiztopic + ". Ask me one question only. Don't give the answer"
 }else if (quizmode && quizquestion > 0 && quizquestion < 5){
     Message = "My answer is: " + Message + ". Check my answer. Respond naturally and briefly, like a teacher marking a student's answer. Avoid phrases like Great job, spot on, or you captured the core idea. Say correct, partially correct, or incorrect, explain the key point in 1-3 sentences, then ask the next question on " + quiztopic + ". At the very end, write exactly [RESULT: CORRECT] if my answer is correct or [RESULT: INCORRECT] if it is wrong.";
     quizquestion += 1
+    document.querySelector(".quizprogress").textContent = "Question " + quizquestion + " of 5"
 }else if(quizmode && quizquestion === 5){
-    Message = "My answer is: " + Message + ". Check my answer. Respond naturally and briefly, like a teacher marking a student's answer. Avoid phrases like Great job, spot on, or you captured the core idea. Say correct, partially correct, or incorrect, explain the key point in 1-3 sentences, then ask the next question on " + quiztopic + ". At the very end, write exactly [RESULT: CORRECT] if my answer is correct or [RESULT: INCORRECT] if it is wrong.";
+   Message = "My answer is: " + Message + ". Check my answer. Respond naturally and briefly like a teacher marking a student's answer. Avoid phrases like Great job, spot on, or you captured the core idea. Say correct, partially correct, or incorrect, explain the key point in 1-3 sentences, then end the quiz. Do not ask another question. At the very end, write exactly [RESULT: CORRECT] if my answer is correct or [RESULT: INCORRECT] if it is wrong."
     quizquestion += 1
 }
 let welcome = document.querySelector(".welcometxt")
@@ -211,7 +230,7 @@ if (currentchatid !== activeChatIdatSend){
     return;
 }
 if (answer) {
-    if (answer.includes("[RESULT: CORRECT")){
+    if (/\[RESULT:\s*CORRECT\s*\]/i.test(answer)){
         quizscore += 1;
     }
     answer = answer.replace(/\[RESULT:\s*(CORRECT|INCORRECT)\s*\]/gi, "");
@@ -222,6 +241,7 @@ if (answer) {
         quiztopic = ""
         quizquestion = 0
         input.placeholder = "Ask Sylqora anything"
+        document.querySelector(".quizstatus").style.display = "none"
     }
     discussion.push({role: "assistant", content: answer});
     Savediscussion();

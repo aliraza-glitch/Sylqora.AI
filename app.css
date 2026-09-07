@@ -258,3 +258,6 @@ button:hover{
 .input textarea::-webkit-scrollbar-track{
     background: #1a1a1a;
 }
+.quizstatus{
+    display: none;
+}
