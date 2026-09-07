@@ -215,8 +215,7 @@ if (answer) {
         quizscore += 1;
     }
     answer = answer.replace(/\[RESULT:\s*(CORRECT|INCORRECT)\s*\]/gi, "");
-    .replace("[RESULT: CORRECT]", "")
-    .replace("[RESULT: INCORRECT", "")
+    
     if (quizmode && quizquestion == 6){
         answer += "\n\n**Quiz complete - Score: " + quizscore + "/5**"
         quizmode = false
