@@ -266,4 +266,8 @@ button:hover{
     font-size: 13px;
     padding:8px 12px;
     border-bottom: 1px solid #303030;
+    position: sticky;
+    top : 0;
+    z-index: 10;
+
 }
