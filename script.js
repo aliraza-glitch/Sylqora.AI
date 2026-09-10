@@ -6,6 +6,8 @@ let quizscore = 0
 let discussion = JSON.parse(localStorage.getItem("Sylqoramemory")) || []
 let chats = JSON.parse(localStorage.getItem("Sylqorachats")) || []
 let currentchatid = localStorage.getItem("SylqoraCurrentChatId") || null;
+let explainmode = false
+let explaintopic = ""
 window.addEventListener("DOMContentLoaded", () => {
     let chatcontainer = document.querySelector(".Chat");
     let welcome = document.querySelector(".welcometxt")
@@ -86,6 +88,8 @@ function ClearDiscussion() {
     quizquestion = 0
     quizscore = 0
     input.placeholder = "Ask Sylqora anything ..."
+    document.querySelector(".quizstatus").style.display = "none"
+    document.querySelector(".explainstatus").style.display = "none"
     Savediscussion();
     
     let chat = document.querySelector(".Chat");
@@ -123,6 +127,7 @@ function Displaychats(){
         quizscore = 0
         input.placeholder = "Ask Sylqora anything ..."
         document.querySelector(".quizstatus").style.display = "none"
+        document.querySelector(".explainstatus").style.display = "none"
         currentchatid = chat.id;
         discussion = [...chat.messages];
         Savediscussion();
@@ -153,7 +158,10 @@ chatlist.append(chatpiece);
 })
 }
 function ExplainConcept(){
-    input.value = "Explain ";
+    explainmode = true
+    explaintopic = ""
+    input.value = ""
+    input.placeholder = "What should I explain ?"
     input.focus();
 }
 function Quizme(){
@@ -169,7 +177,16 @@ async function sendMessage(){
 let Message = input.value.trim()
 let displayMessage = Message;
 if (!Message) return;
-if(quizmode && quiztopic === ""){
+if(explainmode && explaintopic === ""){
+    explaintopic = Message
+    let explainstatus = document.querySelector(".explainstatus")
+    let topicdisplay = document.querySelector(".explaintopic")
+    explainstatus.style.display = "flex"
+    topicdisplay.textContent = "EXPLAIN · " + explaintopic  
+    Message = "Explain " + explaintopic + " clearly and simply. Teach it step by step, use examples if useful and keep it focused and to the topic. In the end ask the user if they understand "
+    explainmode = false
+    input.placeholder = "Ask Sylqora anything ..."
+}else if(quizmode && quiztopic === ""){
     quiztopic = Message
     quizquestion = 1
     let quizstatus = document.querySelector(".quizstatus")
