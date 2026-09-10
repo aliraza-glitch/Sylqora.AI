@@ -35,7 +35,13 @@ function Markdown (text){
         .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
         .replace(/\*(.*?)\*/g, '<i>$1</i>')
         .replace(/^\s*-\s+(.*)$/gm, '<li>$1</li>') 
-        .replace(/\n/g, '<br>');
+        .replace(/\n/g, '<br>')
+        .replace(/^##(.*)$/gm, '<h3>$1</h3>')
+        .replace(/^##(.*)$/gm, '<h2>$1</h2>')
+        .replace(/^---$/gm, '<hr>')
+        .replace(/\\\[/g, '')
+        .replace(/\\\]/g, '')
+        .replace(/\\,/g, '')
     return formatted;
 }
 function    Savediscussion() {
@@ -183,7 +189,7 @@ if(explainmode && explaintopic === ""){
     let topicdisplay = document.querySelector(".explaintopic")
     explainstatus.style.display = "flex"
     topicdisplay.textContent = "EXPLAIN · " + explaintopic  
-    Message = "Explain " + explaintopic + " clearly and simply. Teach it step by step, use examples if useful and keep it focused and to the topic. In the end ask the user if they understand "
+    Message = "Explain " + explaintopic + " clearly and simply. Teach it step by step, use examples if useful and keep it focused and to the topic. In the end ask the user if they understand . Write equations in plain text do not use LaTex notation"
     explainmode = false
     input.placeholder = "Ask Sylqora anything ..."
 }else if(quizmode && quiztopic === ""){
