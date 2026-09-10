@@ -34,14 +34,17 @@ function Markdown (text){
         .replace(/>/g, "&gt;")
         .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
         .replace(/\*(.*?)\*/g, '<i>$1</i>')
-        .replace(/^\s*-\s+(.*)$/gm, '<li>$1</li>') 
-        .replace(/\n/g, '<br>')
-        .replace(/^##(.*)$/gm, '<h3>$1</h3>')
-        .replace(/^##(.*)$/gm, '<h2>$1</h2>')
+        .replace(/^\s*[-*]\s+(.*)$/gm, '<li>$1</li>')
+        .replace(/^###\s+(.*)$/gm, '<h3>$1</h3>')
+        .replace(/^##\s+(.*)$/gm, '<h2>$1</h2>')
         .replace(/^---$/gm, '<hr>')
         .replace(/\\\[/g, '')
         .replace(/\\\]/g, '')
         .replace(/\\,/g, '')
+        .replace(/\\\*/g, '*')
+        .replace(/\\_/g, '_')
+        .replace(/`(.*?)`/g, '<code>$1</code>')
+        .replace(/\n/g, '<br>')
     return formatted;
 }
 function    Savediscussion() {
