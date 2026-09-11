@@ -8,6 +8,11 @@ let chats = JSON.parse(localStorage.getItem("Sylqorachats")) || []
 let currentchatid = localStorage.getItem("SylqoraCurrentChatId") || null;
 let explainmode = false
 let explaintopic = ""
+let flashcardmode = false
+let flashcardtopic = ""
+let flashcardnumber = 0
+let flashcardanswer = ""
+let flashcardrevealed = false
 window.addEventListener("DOMContentLoaded", () => {
     let chatcontainer = document.querySelector(".Chat");
     let welcome = document.querySelector(".welcometxt")
@@ -97,6 +102,8 @@ function ClearDiscussion() {
     quizquestion = 0
     quizscore = 0
     input.placeholder = "Ask Sylqora anything ..."
+    explainmode = false
+    explaintopic = ""
     document.querySelector(".quizstatus").style.display = "none"
     document.querySelector(".explainstatus").style.display = "none"
     Savediscussion();
@@ -167,6 +174,11 @@ chatlist.append(chatpiece);
 })
 }
 function ExplainConcept(){
+    quizmode=false
+    quiztopic=""
+    quizscore = 0
+    quizquestion = 0
+    document.querySelector(".quizstatus").style.display = "none"
     explainmode = true
     explaintopic = ""
     input.value = ""
@@ -182,10 +194,65 @@ function Quizme(){
     input.placeholder = "What should I quiz you on ?"
     input.focus();
 }
+function Flashcards(){
+    quizmode = false
+    quiztopic = ""
+    quizquestion = 0
+    quizscore = 0
+    explainmode = false 
+    explaintopic = ""
+    document.querySelector(".quizstatus").style.display = "none"
+    document.querySelector(".explainstatus").style.display = "none"
+    flashcardmode = true
+    flashcardnumber = 0
+    flashcardtopic = ""
+    input.value = ""
+    input.placeholder = "What topic should I make flashcards for?"
+    input.focus();
+}
+function FlashcardButton(){
+    if (flashcardrevealed === false){
+    document.querySelector(".flashcardcontent").textContent = flashcardanswer
+    document.querySelector(".flashcardbtn").textContent = "Next Card"
+    flashcardrevealed = true
+    }else{
+        flashcardrevealed = false
+        flashcardnumber += 1
+        document.querySelector(".flashcardcontent").textContent = "Loading Card ..."
+        document.querySelector(".flashcardbtn").style.display = "none"
+        GenerateNextFlashCard()
+
+    }
+}
+
+async function GenerateNextFlashCard(){
+    let prompt = "Create one new flashcard on " + flashcardtopic + ". This is card number " + flashcardnumber + ". Return exactly this format: QUESTION: [question] ANSWER: [answer]. Keep it concise and don't repeat the previous card"
+    let answer = await toServer(prompt, discussion)
+    if (answer && answer.includes("QUESTION:") && answer.includes("ANSWER:")){
+        let question = answer.split("QUESTION:")[1].split("ANSWER:")[0].trim()
+        flashcardanswer = answer.split("ANSWER:")[1].trim()
+        document.querySelector(".flashcardcontent").textContent = question
+        document.querySelector(".flashcardbtn").textContent = "Reveal Answer"
+        document.querySelector(".flashcardbtn").style.display = "block"
+    }
+}
+
 async function sendMessage(){
 let Message = input.value.trim()
 let displayMessage = Message;
 if (!Message) return;
+if (flashcardmode && flashcardtopic === ""){
+    flashcardtopic = Message
+    flashcardnumber = 1
+    let flashcardbox = document.querySelector(".flashcardbox")
+    let flashcardcontent = document.querySelector(".flashcardcontent")
+    let flashcardbtn = document.querySelector(".flashcardbtn")
+    flashcardbox.style.display = "flex"
+    flashcardcontent.textContent = "Loading Card ..."
+    flashcardbtn.style.display = "none"
+    Message = "Create one flashcard on " + flashcardtopic + ". Return exactly this format: QUESTION: [question] ANSWER: [answer]. Keep the question concise and make the answer suitable for active recall."
+    input.placeholder = "Type Reveal to see the answer"
+}
 if(explainmode && explaintopic === ""){
     explaintopic = Message
     let explainstatus = document.querySelector(".explainstatus")
@@ -260,7 +327,14 @@ if (answer) {
         quizscore += 1;
     }
     answer = answer.replace(/\[RESULT:\s*(CORRECT|INCORRECT)\s*\]/gi, "");
-    
+    if (flashcardmode && answer.includes("QUESTION:") && answer.includes("ANSWER:")){
+        let question = answer.split("QUESTION:")[1].split("ANSWER:")[0].trim()
+        flashcardanswer = answer.split("ANSWER:")[1].trim()
+
+        document.querySelector(".flashcardcontent").textContent = question
+        document.querySelector(".flashcardbtn").style.display = "block"
+        return;
+    }
     if (quizmode && quizquestion == 6){
         answer += "\n\n**Quiz complete - Score: " + quizscore + "/5**"
         quizmode = false

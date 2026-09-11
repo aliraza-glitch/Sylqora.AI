@@ -284,3 +284,26 @@ button:hover{
     z-index: 10;
     background-color: #121212;
 }
+.flashcardbox{
+    display: none;
+    width: 90%;
+    margin: auto;
+    max-width: 560px;
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 18px;
+    flex-direction: column;
+    padding: 28px;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+}
+.flashcardcontent{
+    color: #eeeeee;
+    font-size: 18px;
+    line-height:1.5;
+}
+.flashcardbtn{
+    height: 40px;
+    border-radius:10px;
+}
