@@ -210,16 +210,40 @@ body{
 }
 
 @media (max-width: 768px) {
-    .navibar {
-        flex-direction: column;
-        align-items: flex-start;
+    .navibar{
+        padding: 12px 18px;
     }
-    .nav-links {
-        flex-direction: column;
-        width: 100%;
+    .navwrap{
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
     }
-    .nav-links a {
-        margin-bottom: 10px;
+    .brand{
+        font-size: 20px;
+    }
+    .nav-links{
+        flex-direction: row;
+        gap: 14px;
+        width: auto;
+        margin-left: auto;
+    }
+    .nav-links a{
+        font-size: 13px;
+        margin-bottom: 0;
+    }
+    .navbtn{
+        padding: 7px 10px;
+        font-size: 13px;
+    }
+    .hero h1{
+        font-size: 42px;
+    }
+    .hero p{
+        font-size: 16px;
+        padding: 0 20px;
+    }
+    .hero{
+        min-height: 85vh;
     }
 }
 @keyframes heroshow {
