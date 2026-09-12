@@ -105,6 +105,13 @@ function ClearDiscussion() {
     input.placeholder = "Ask Sylqora anything ..."
     explainmode = false
     explaintopic = ""
+    flashcardmode = false
+    flashcardtopic = ""
+    flashcardnumber = 0
+    flashcardrevealed = false
+    flashcardanswer = ""
+    previousflash = ""
+    document.querySelector(".flashcardbox").style.display = "none"
     document.querySelector(".quizstatus").style.display = "none"
     document.querySelector(".explainstatus").style.display = "none"
     Savediscussion();
@@ -142,9 +149,17 @@ function Displaychats(){
         quiztopic = ""
         quizquestion = 0
         quizscore = 0
+        flashcardanswer = ""
+        flashcardmode = false
+        flashcardnumber = 0
+        previousflash = ""
+        flashcardrevealed = false
+        flashcardtopic = ""
+        document.querySelector(".flashcardbox").style.display = "none"
         input.placeholder = "Ask Sylqora anything ..."
         document.querySelector(".quizstatus").style.display = "none"
         document.querySelector(".explainstatus").style.display = "none"
+
         currentchatid = chat.id;
         discussion = [...chat.messages];
         Savediscussion();
@@ -175,6 +190,9 @@ chatlist.append(chatpiece);
 })
 }
 function ExplainConcept(){
+    flashcardmode = false
+    flashcardtopic = ""
+    document.querySelector(".flashcardbox").style.display = "none"
     quizmode=false
     quiztopic=""
     quizscore = 0
@@ -187,6 +205,9 @@ function ExplainConcept(){
     input.focus();
 }
 function Quizme(){
+    flashcardmode = false
+    flashcardtopic = ""
+    document.querySelector(".flashcardbox").style.display = "none"
     quizmode = true;
     quizscore = 0
     quizquestion = 0
@@ -227,11 +248,12 @@ function FlashcardButton(){
 }
 
 async function GenerateNextFlashCard(){
-    let prompt = ". The previous question was: " + previousflash +
+    let prompt = "Create a new flashcard on " + flashcardtopic + ". The previous question was: " + previousflash +
 ". Do not repeat it or ask essentially the same thing. Return exactly this format: QUESTION: [question] ANSWER: [answer]. Keep it concise."
     let answer = await toServer(prompt, discussion)
     if (answer && answer.includes("QUESTION:") && answer.includes("ANSWER:")){
         let question = answer.split("QUESTION:")[1].split("ANSWER:")[0].trim()
+        previousflash = question
         flashcardanswer = answer.split("ANSWER:")[1].trim()
         document.querySelector(".flashcardcontent").textContent = question
         document.querySelector(".flashcardbtn").textContent = "Reveal Answer"
@@ -253,7 +275,7 @@ if (flashcardmode && flashcardtopic === ""){
     flashcardcontent.textContent = "Loading Card ..."
     flashcardbtn.style.display = "none"
     Message = "Create one flashcard on " + flashcardtopic + ". Return exactly this format: QUESTION: [question] ANSWER: [answer]. Keep the question concise and make the answer suitable for active recall."
-    input.placeholder = "Type Reveal to see the answer"
+    input.placeholder = "Ask Sylqora anything ..."
 }
 if(explainmode && explaintopic === ""){
     explaintopic = Message
