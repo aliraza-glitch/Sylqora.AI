@@ -13,6 +13,7 @@ let flashcardtopic = ""
 let flashcardnumber = 0
 let flashcardanswer = ""
 let flashcardrevealed = false
+let previousflash = ""
 window.addEventListener("DOMContentLoaded", () => {
     let chatcontainer = document.querySelector(".Chat");
     let welcome = document.querySelector(".welcometxt")
@@ -226,7 +227,8 @@ function FlashcardButton(){
 }
 
 async function GenerateNextFlashCard(){
-    let prompt = "Create one new flashcard on " + flashcardtopic + ". This is card number " + flashcardnumber + ". Return exactly this format: QUESTION: [question] ANSWER: [answer]. Keep it concise and don't repeat the previous card"
+    let prompt = ". The previous question was: " + previousflash +
+". Do not repeat it or ask essentially the same thing. Return exactly this format: QUESTION: [question] ANSWER: [answer]. Keep it concise."
     let answer = await toServer(prompt, discussion)
     if (answer && answer.includes("QUESTION:") && answer.includes("ANSWER:")){
         let question = answer.split("QUESTION:")[1].split("ANSWER:")[0].trim()
@@ -329,6 +331,7 @@ if (answer) {
     answer = answer.replace(/\[RESULT:\s*(CORRECT|INCORRECT)\s*\]/gi, "");
     if (flashcardmode && answer.includes("QUESTION:") && answer.includes("ANSWER:")){
         let question = answer.split("QUESTION:")[1].split("ANSWER:")[0].trim()
+        previousflash = question
         flashcardanswer = answer.split("ANSWER:")[1].trim()
 
         document.querySelector(".flashcardcontent").textContent = question
