@@ -261,6 +261,11 @@ async function GenerateNextFlashCard(){
     }
 }
 
+function OpenSide(){
+    document.querySelector(".sidebar").classList.toggle("open")
+    document.querySelector(".sidebaroverlay").classList.toggle("open")
+}
+
 async function sendMessage(){
 let Message = input.value.trim()
 let displayMessage = Message;

@@ -8,6 +8,12 @@
 </head>
 <body>
     <div class = "sidebar">
+        <button class="sideclose" onclick="OpenSide()" aria-label="Close sidebar">
+            <svg viewBox="0 0 24 24">
+                <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+                <line x1="8" y1="4" x2="8" y2="20"></line>
+            </svg>
+        </button>
         <div  class="sidebrand"> 
             <span>✦</span>
             <div>
@@ -19,8 +25,14 @@
         <h3>Recent Chats</h3>
         <div class = "list" ></div>
     </div>
+    <div class = "sidebaroverlay" onclick="OpenSide()"></div>
     <div class = "main">
-    
+     <button class="sidebarbtn" onclick="OpenSide()" aria-label="Open sidebar">
+      <svg viewBox="0 0 24 24">
+        <rect x="3" y="4" width="18" height="16" rx="2"></rect>
+        <line x1="8" y1="4" x2="8" y2="20"></line>
+      </svg>
+     </button>
     <div class="Chat">
         <div class = "quizstatus">
             <span class = "quiztopic"></span>

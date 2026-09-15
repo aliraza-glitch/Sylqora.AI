@@ -26,15 +26,16 @@ body{
     flex-direction: column;
 }
 .Botmsg{
-    background-color: #1e1e1e;
+    margin-top: 8px;
+    background-color: transparent;
     color:#eeeeee;
-    padding: 12px 15px;
+    padding: 4px 0;
     border-radius: 14px 14px 14px 4px;
     width: fit-content;
-    max-width: 70%;
-    line-height: 1.4;
+    max-width: 100%;
+    line-height: 1.6;
     align-self: flex-start;
-    border: 1px solid #333;
+    border: none;
 
 }
 .Botmesg{
@@ -87,12 +88,12 @@ button:hover{
     background: rgb(97, 45, 97);
 }
 .UserBubble{
-    background-color: rgb(139, 65, 139);
+    background-color: rgb(105,58,105);
     color:#ffffff;
     padding: 12px 15px;
-    border-radius: 14px 14px 4px 14px;
+    border-radius: 22px;
     width: fit-content;
-    max-width: 60%;
+    max-width: 75%;
     line-height: 1.3;
     align-self: flex-end;
 }
@@ -129,9 +130,15 @@ button:hover{
     color: white;
     padding: 20px;
     border-right: 1px solid #333;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+}
+.sidebar.open{
+    transform: translateX(0);
 }
 .main{
-    margin-left: 240px;
+    margin-left: 0;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -174,6 +181,13 @@ button:hover{
     height: 42px;
     border-radius: 10px;
     margin-top: 6px;
+    background-color: #272727;
+    border: 1px solid #333;
+    color: #eeeeee
+}
+.newchat:hover{
+    background-color: #303030;
+    border-color: rgb(139, 65,139);
 }
 .sidebrand{
     display: flex;
@@ -258,6 +272,16 @@ button:hover{
 .input textarea::-webkit-scrollbar-track{
     background: #1a1a1a;
 }
+.sidebaroverlay{
+    position: fixed;
+    inset:0;
+    background-color: rgb(0,0,0,0.45);
+    z-index: 950;
+    display: none;
+}
+.sidebaroverlay.open{
+    display: block;
+}
 .quizstatus{
     display: none;
     justify-content: space-between;
@@ -307,9 +331,64 @@ button:hover{
     height: 40px;
     border-radius:10px;
 }
+.sidebarbtn{
+    position: fixed;
+    top: 18px;
+    left: 18px;
+    width: 36px;
+    background: transparent;
+    height: 36px;
+    padding: 0;
+    z-index: 900;
+    font-size: 25px;
+    color: #bdbdbd;
+    border-radius: 8px;
+    border: none;
+    
+}
+.sidebarbtn:hover{
+    background-color: #242424;
+    border-radius: 8px;
+}
+.sideclose{
+    position: absolute;
+    top: 16px;
+    right:16px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: transparent;
+    font-size: 22px;
+    font-weight: normal;
+    border-radius: 8px;
+    color:#bdbdbd   
+}
+.sideclose:hover{
+    background-color: #2a2a2a;
+    color:white;
+}
+.sidebarbtn svg{
+    width: 25px;
+    height:25px;
+    fill: none;
+    stroke: #bdbdbd;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+}
+.sideclose svg{
+    width: 22px;
+    height:22px;
+    fill: none;
+    stroke: #bdbdbd;
+    stroke-width: 1.8;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+}
 @media(max-width: 768px){
     .sidebar{
-        display:none;
+        width: 82%;
+        max-width: 280px;
     }
     .main{
         margin-left: 0;
@@ -317,11 +396,11 @@ button:hover{
     }
     .Chat{
         width: 94%;
-        margin: 20px auto 12px;
+        margin: 64px auto 12px;
         gap: 12px;
     }
     .input{
-        width: 94%;
+        width: 92%;
         margin: 0 auto 12px;
     }
     .suggestions{
@@ -335,6 +414,12 @@ button:hover{
     }
     .welcometxt h2{
         font-size: 24px;
+        text-align: center;
+    }
+    .welcometxt > p{
+        font-size: 14px;
+        text-align: center;
+        padding: 0 16px;
     }
     .Botmsg{
         max-width: 85%;
@@ -348,5 +433,10 @@ button:hover{
         padding: 22px;
 
         
+    }
+    .Botmsg,
+    .UserBubble{
+        overflow-wrap: break-word;
+        word-break: break-word;
     }
 }
