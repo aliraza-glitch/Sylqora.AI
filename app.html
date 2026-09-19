@@ -68,9 +68,13 @@
     </div>
 
     </div>
+    <div class = "filechip">
+        <span class = "filechipname"></span>
+        <button class = "removefile" onclick = "RemoveFile()">×</button>
+    </div>
     <div class="input">
         <input type = "file" id = "filein" accept=".pdf,.txt" hidden>
-        <button class = "attachbtn" onclick = "document.getElementById('filein').click()">+</button>
+        <button class="attachbtn" onclick="document.getElementById('filein').click()" title="Upload study material">📎</button>
         <textarea type="text"   id="input"   placeholder="Ask Sylqora anything ..." ></textarea>
         <button class="sendbtn"   onclick="sendMessage()">➤</button>
     </div>

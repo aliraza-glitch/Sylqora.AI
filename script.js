@@ -21,7 +21,10 @@ filein.addEventListener("change", function(){
     chosenfile = filein.files[0]
     if(chosenfile){
         console.log("Selected file:", chosenfile.name)
+        document.querySelector(".filechipname").textContent = "📄 " + chosenfile.name
+        document.querySelector(".filechip").style.display = "flex"
         if(chosenfile.type === "text/plain"){
+            
             chosenfile.text().then(function(text){
                 filetext = text
                 console.log(filetext)
@@ -46,7 +49,7 @@ filein.addEventListener("change", function(){
                             }).join(" ")
                             pages[i-1] = pgtxt
                             if(pages.filter(Boolean).length === pdf.numPages){
-                                filetext = pages.join("")
+                                filetext = pages.join(" ")
                                 console.log("Full PDF text ready")
                             }
                             console.log(pgtxt)
@@ -61,6 +64,14 @@ filein.addEventListener("change", function(){
     
     
 })
+function RemoveFile(){
+    chosenfile = null
+    filetext = ""
+    filein.value = ""
+
+    document.querySelector(".filechipname").textContent = ""
+    document.querySelector(".filechip").style.display = "none"
+}
 window.addEventListener("DOMContentLoaded", () => {
     let chatcontainer = document.querySelector(".Chat");
     let welcome = document.querySelector(".welcometxt")
@@ -158,6 +169,7 @@ function ClearDiscussion() {
     flashcardrevealed = false
     flashcardanswer = ""
     previousflash = ""
+    RemoveFile()
     document.querySelector(".flashcardbox").style.display = "none"
     document.querySelector(".quizstatus").style.display = "none"
     document.querySelector(".explainstatus").style.display = "none"
