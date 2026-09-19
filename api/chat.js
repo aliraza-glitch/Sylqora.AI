@@ -9,6 +9,7 @@ module.exports = async (req, res) => {
     try {
         const message = req.body?.message
         const rawHistory = req.body?.history || []
+        const notes = req.body?.notes || ""
         const recentHistory = rawHistory.slice(-10);
         console.log("History recieved" , recentHistory.length)
         console.log("Message recieved" , message)
@@ -44,6 +45,10 @@ module.exports = async (req, res) => {
                             
                         },
                         ...recentHistory,
+                        {
+                            role: "system",
+                            content: notes ? "The student has uploaded study material. Use the following material when it is relevant to their question. Base claims about the uploaded material on this text and do not invent information that is not present in it:\n\n" + notes : ""
+                        },
                         {
                             role: "user",
                             content: message

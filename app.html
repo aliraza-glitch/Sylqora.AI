@@ -69,10 +69,13 @@
 
     </div>
     <div class="input">
+        <input type = "file" id = "filein" accept=".pdf,.txt" hidden>
+        <button class = "attachbtn" onclick = "document.getElementById('filein').click()">+</button>
         <textarea type="text"   id="input"   placeholder="Ask Sylqora anything ..." ></textarea>
         <button class="sendbtn"   onclick="sendMessage()">➤</button>
     </div>
     </div>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

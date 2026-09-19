@@ -14,6 +14,53 @@ let flashcardnumber = 0
 let flashcardanswer = ""
 let flashcardrevealed = false
 let previousflash = ""
+let filein = document.getElementById("filein")
+let chosenfile = null
+let filetext = ""
+filein.addEventListener("change", function(){
+    chosenfile = filein.files[0]
+    if(chosenfile){
+        console.log("Selected file:", chosenfile.name)
+        if(chosenfile.type === "text/plain"){
+            chosenfile.text().then(function(text){
+                filetext = text
+                console.log(filetext)
+            })
+        }else if(chosenfile.type === "application/pdf"){
+            console.log("PDF detected")
+            let reader = new FileReader()
+            reader.onload=function(){
+                console.log("PDF loaded into reader")
+                let pdfdata = new Uint8Array(reader.result)
+                pdfjsLib.getDocument(pdfdata).promise.then(function(pdf){
+                    console.log("PDF pages:", pdf.numPages)
+                    filetext = ""
+                    let pages = []
+                    for(let i = 1; i <= pdf.numPages; i++){
+                    pdf.getPage(i).then(function(page){
+                        console.log("Page loaded", i)
+                        page.getTextContent().then(function(content){
+                            console.log(content)
+                            let pgtxt = content.items.map(function(item){
+                                return item.str
+                            }).join(" ")
+                            pages[i-1] = pgtxt
+                            if(pages.filter(Boolean).length === pdf.numPages){
+                                filetext = pages.join("")
+                                console.log("Full PDF text ready")
+                            }
+                            console.log(pgtxt)
+                        })
+                    })
+                }
+                })
+            }
+            reader.readAsArrayBuffer(chosenfile)
+        }
+    }
+    
+    
+})
 window.addEventListener("DOMContentLoaded", () => {
     let chatcontainer = document.querySelector(".Chat");
     let welcome = document.querySelector(".welcometxt")
@@ -427,7 +474,8 @@ function sendBotMessage(answer){
 async function toServer(message, history){
     let msgData = {
         message: message,
-        history: history
+        history: history,
+        notes: filetext
     };
     try{
     let response = await fetch("/api/chat",{
