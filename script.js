@@ -39,19 +39,27 @@ filein.addEventListener("change", function(){
                     console.log("PDF pages:", pdf.numPages)
                     filetext = ""
                     let pages = []
+                    let finishedpgs = 0
                     for(let i = 1; i <= pdf.numPages; i++){
-                    pdf.getPage(i).then(function(page){
+                    pdf.getPage(i).then(async function(page){
                         console.log("Page loaded", i)
-                        page.getTextContent().then(function(content){
+                        
+                        page.getTextContent().then(async function(content){
                             console.log(content)
                             let pgtxt = content.items.map(function(item){
                                 return item.str
                             }).join(" ")
+                            if(content.items.length < 15){
+                                console.log("⚠️ Page may be scanned or missing text:", i)
+                                pgtxt = await OCRPage(page, i)
+                            }
                             pages[i-1] = pgtxt
-                            if(pages.filter(Boolean).length === pdf.numPages){
+                            finishedpgs++
+                            if(finishedpgs ===  pdf.numPages){
                                 filetext = pages.join(" ")
                                 console.log("Full PDF text ready")
                             }
+                            
                             console.log(pgtxt)
                         })
                     })
@@ -64,6 +72,23 @@ filein.addEventListener("change", function(){
     
     
 })
+async function OCRPage(page, pageNumber, pages){
+    console.log("Starting OCR for page ", pageNumber)
+    const viewport = page.getViewport({scale:2})
+    const canvas = document.createElement("canvas")
+    const context = canvas.getContext("2d")
+    canvas.width = viewport.width
+    canvas.height = viewport.height
+    await page.render({
+        canvasContext: context,
+        viewport: viewport
+    }).promise
+    console.log("Page rendered for OCR ", pageNumber)
+    console.log("Running OCR on page ", pageNumber)
+    const result = await Tesseract.recognize(canvas, "eng")
+    console.log("OCR TEXT PAGE", pageNumber, result.data.text)
+    return result.data.text
+}
 function RemoveFile(){
     chosenfile = null
     filetext = ""
