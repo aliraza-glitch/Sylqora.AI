@@ -17,6 +17,7 @@ let previousflash = ""
 let filein = document.getElementById("filein")
 let chosenfile = null
 let filetext = ""
+let fileloaded = false
 filein.addEventListener("change", function(){
     chosenfile = filein.files[0]
     if(chosenfile){
@@ -31,6 +32,7 @@ filein.addEventListener("change", function(){
             })
         }else if(chosenfile.type === "application/pdf"){
             console.log("PDF detected")
+            fileloaded = true
             let reader = new FileReader()
             reader.onload=function(){
                 console.log("PDF loaded into reader")
@@ -57,7 +59,10 @@ filein.addEventListener("change", function(){
                             finishedpgs++
                             if(finishedpgs ===  pdf.numPages){
                                 filetext = pages.join(" ")
+                                fileloaded = false
+                                input.placeholder = "Ask Sylqora anything ..."
                                 console.log("Full PDF text ready")
+
                             }
                             
                             console.log(pgtxt)
@@ -351,6 +356,10 @@ function OpenSide(){
 }
 
 async function sendMessage(){
+if(fileloaded){
+    input.placeholder("PDF is still being processed")
+    return
+}
 let Message = input.value.trim()
 let displayMessage = Message;
 if (!Message) return;
