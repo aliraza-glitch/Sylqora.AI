@@ -357,7 +357,7 @@ function OpenSide(){
 
 async function sendMessage(){
 if(fileloaded){
-    input.placeholder("PDF is still being processed")
+    input.placeholder = "PDF is still being processed"
     return
 }
 let Message = input.value.trim()
