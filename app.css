@@ -388,6 +388,10 @@ button:hover{
     stroke-linejoin: round;
     stroke-linecap: round;
 }
+.sendbtn:disabled{
+    opacity: 0.4;
+    cursor: not-allowed;
+}
 @media(max-width: 768px){
     .sidebar{
         width: 82%;

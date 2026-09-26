@@ -1,4 +1,5 @@
 let input = document.getElementById("input")
+let sendbtn = document.querySelector(".sendbtn")
 let quizmode = false
 let quiztopic = ""
 let quizquestion = 0
@@ -33,6 +34,8 @@ filein.addEventListener("change", function(){
         }else if(chosenfile.type === "application/pdf"){
             console.log("PDF detected")
             fileloaded = true
+            input.placeholder = "Reading PDF..."
+            sendbtn.disabled = true
             let reader = new FileReader()
             reader.onload=function(){
                 console.log("PDF loaded into reader")
@@ -61,7 +64,9 @@ filein.addEventListener("change", function(){
                                 filetext = pages.join(" ")
                                 fileloaded = false
                                 input.placeholder = "Ask Sylqora anything ..."
+                                sendbtn.disabled = false
                                 console.log("Full PDF text ready")
+                                
 
                             }
                             
@@ -77,7 +82,7 @@ filein.addEventListener("change", function(){
     
     
 })
-async function OCRPage(page, pageNumber, pages){
+async function OCRPage(page, pageNumber){
     console.log("Starting OCR for page ", pageNumber)
     const viewport = page.getViewport({scale:2})
     const canvas = document.createElement("canvas")
@@ -90,9 +95,14 @@ async function OCRPage(page, pageNumber, pages){
     }).promise
     console.log("Page rendered for OCR ", pageNumber)
     console.log("Running OCR on page ", pageNumber)
-    const result = await Tesseract.recognize(canvas, "eng")
-    console.log("OCR TEXT PAGE", pageNumber, result.data.text)
-    return result.data.text
+    try {
+        const result = await Tesseract.recognize(canvas, "eng")
+        console.log ("OCR TEXT PAGE", pageNumber, result.data.text)
+        return result.data.text
+    }catch(error){
+        console.error("OCR failed on page", pageNumber, error)
+        return ""
+    }
 }
 function RemoveFile(){
     chosenfile = null
@@ -120,26 +130,44 @@ window.addEventListener("DOMContentLoaded", () => {
     chatcontainer.scrollTop = chatcontainer.scrollHeight;
     Displaychats();
 })
-function Markdown (text){
-    if (!text) return"";
+function Markdown(text){
+    if (!text) return "";
+
     let formatted = text
+        .replace(/\\\(/g, "")
+        .replace(/\\\)/g, "")
+        .replace(/\\\[/g, "")
+        .replace(/\\\]/g, "")
+        .replace(/\\times/g, "×")
+        .replace(/\\cdot/g, "·")
+        .replace(/\\approx/g, "≈")
+        .replace(/\\Delta/g, "Δ")
+        .replace(/\\sqrt\{([^{}]+)\}/g, "√($1)")
+        .replace(/\\mathrm\{([^{}]+)\}/g, "$1")
+        .replace(/\\text\{([^{}]+)\}/g, "$1")
+        .replace(/\^\{2\}/g, "²")
+        .replace(/\^\{3\}/g, "³")
+        .replace(/\^2\b/g, "²")
+        .replace(/\^3\b/g, "³")
+        .replace(/\\frac\{([^{}]+)\}\{([^{}]+)\}/g, "($1)/($2)")
+        .replace(/\\boxed\{([^{}]+)\}/g, "$1")
+        .replace(/\\,/g, " ")
+        .replace(/\\;/g, " ")
+        .replace(/\\!/g, "")
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
-        .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
-        .replace(/\*(.*?)\*/g, '<i>$1</i>')
-        .replace(/^\s*[-*]\s+(.*)$/gm, '<li>$1</li>')
-        .replace(/^###\s+(.*)$/gm, '<h3>$1</h3>')
-        .replace(/^##\s+(.*)$/gm, '<h2>$1</h2>')
-        .replace(/^---$/gm, '<hr>')
-        .replace(/\\\[/g, '')
-        .replace(/\\\]/g, '')
-        .replace(/\\,/g, '')
-        .replace(/\\\*/g, '*')
-        .replace(/\\_/g, '_')
-        .replace(/`(.*?)`/g, '<code>$1</code>')
-        .replace(/\n/g, '<br>')
-    return formatted;
+        .replace(/\*\*(.*?)\*\*/g, "<b>$1</b>")
+        .replace(/\*(.*?)\*/g, "<i>$1</i>")
+        .replace(/^###\s+(.+)$/gm, "<h3>$1</h3>")
+        .replace(/^##\s+(.+)$/gm, "<h2>$1</h2>")
+        .replace(/^---$/gm, "<hr>")
+        .replace(/^\s*[-*]\s+(.+)$/gm, "• $1")
+        .replace(/`(.*?)`/g, "<code>$1</code>")
+        .replace(/\\_/g, "_")
+        .replace(/\\\*/g, "*")
+        .replace(/\n/g, "<br>")
+        return formatted;
 }
 function    Savediscussion() {
     localStorage.setItem("Sylqoramemory", JSON.stringify(discussion));
