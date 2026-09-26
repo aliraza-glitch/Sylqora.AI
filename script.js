@@ -454,7 +454,21 @@ if (thinking){
 }
 newMsg.scrollTop = newMsg.scrollHeight;
 
-let answer = await toServer(Message, historyShot);
+let streamingBotMsg = document.createElement("div")
+streamingBotMsg.className = "Botmsg"
+streamingBotMsg.style.display = "none"
+newMsg.append(streamingBotMsg)
+
+let answer = await toServer(Message, historyShot, function(currentAnswer){
+    if(thinking){
+        thinking.style.display = "none"
+    }
+
+    streamingBotMsg.style.display = "block"
+    streamingBotMsg.innerHTML = Markdown(currentAnswer)
+
+    newMsg.scrollTop = newMsg.scrollHeight
+});
 
 if (thinking){
     thinking.style.display = "none"
@@ -496,7 +510,7 @@ if (answer) {
     }
     discussion.push({role: "assistant", content: answer});
     Savediscussion();
-    sendBotMessage(answer);
+    streamingBotMsg.innerHTML = Markdown(answer)
     Autosave();
 }else{
     userMsg.remove();
@@ -545,7 +559,7 @@ function sendBotMessage(answer){
 
 
 
-async function toServer(message, history){
+async function toServer(message, history, onChunk){
     let msgData = {
         message: message,
         history: history,
@@ -570,7 +584,11 @@ async function toServer(message, history){
         if(done) break
         const chunk = decoder.decode(value, {stream: true})
         fullReply += chunk
+        if (onChunk){
+            onChunk(fullReply)
+        }
         console.log("STREAM CHUNK:", chunk)
+        
     }
     return fullReply
 }catch(error){
