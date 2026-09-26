@@ -54,34 +54,47 @@ module.exports = async (req, res) => {
                             content: message
                         }
                     ],
-                    max_tokens: 1000
+                    max_tokens: 1000,
+                    stream : true
                 })
             }
         )
-
-        const data = await response.json()
-
         console.log("GROQ STATUS:", response.status)
-        console.log("GROQ RESPONSE:", data)
-
-        if (!response.ok || data.error) {
-            return res.status(500).json({
-                error: data.error?.message || "Groq API request failed"
+        if(!response.ok){
+            const errorText = await response.text()
+            console.error("GROQ ERROR:", errorText)
+            return res.status(response.status).json({
+                error: "Groq API request failed"
             })
         }
-
-        const reply = data.choices?.[0]?.message?.content
-
-        if (!reply) {
-            return res.status(500).json({
-                error: "Groq returned no message"
-            })
+        res.statusCode = 200
+        res.setHeader("Content-Type", "text/plain; charset=utf-8")
+        res.setHeader("Cache-Control", "no-cache")
+        const reader = response.body.getReader()
+        const decoder = new TextDecoder()
+        let buffer = ""
+        while(true){
+            const{done, value} = await reader.read()
+            if(done) break
+            buffer += decoder.decode(value, {stream: true})
+            const lines = buffer.split("\n")
+            buffer = lines.pop() || ""
+            for(const line of lines){
+                if(!line.startsWith("data: ")) continue
+                const data = line.slice(6).trim()
+                if(data === "[DONE]") continue
+                try{
+                    const parsed = JSON.parse(data)
+                    const chunk = parsed.choices?.[0]?.delta?.content
+                    if(chunk){
+                        res.write(chunk)
+                    }
+                }catch(error){
+                    console.error("STREAM PARSE ERROR:", error)
+                }
+            }
         }
-
-        return res.status(200).json({
-            Reply: reply
-        })
-
+        res.end()
     } catch (error) {
         console.error("CHAT ERROR:", error)
 

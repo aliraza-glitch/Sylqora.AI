@@ -562,9 +562,17 @@ async function toServer(message, history){
     if(!response.ok){
         throw new Error(`HTTP error: ${response.status}`)
     }
-    let data = await response.json()
-    console.log("API data:" ,data)
-    return data.Reply;
+    const reader = response.body.getReader()
+    const decoder = new TextDecoder()
+    let fullReply = ""
+    while(true){
+        const{done, value} = await reader.read()
+        if(done) break
+        const chunk = decoder.decode(value, {stream: true})
+        fullReply += chunk
+        console.log("STREAM CHUNK:", chunk)
+    }
+    return fullReply
 }catch(error){
     console.error("Server error:", error);
     return null;
