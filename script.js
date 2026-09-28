@@ -19,6 +19,7 @@ let filein = document.getElementById("filein")
 let chosenfile = null
 let filetext = ""
 let fileloaded = false
+let controller = null
 filein.addEventListener("change", function(){
     chosenfile = filein.files[0]
     if(chosenfile){
@@ -458,7 +459,9 @@ let streamingBotMsg = document.createElement("div")
 streamingBotMsg.className = "Botmsg"
 streamingBotMsg.style.display = "none"
 newMsg.append(streamingBotMsg)
-
+let sendbtn = document.querySelector("#sendbtn")
+sendbtn.textContent = "■"
+sendbtn.onclick = StopGeneration
 let answer = await toServer(Message, historyShot, function(currentAnswer){
     if(thinking){
         thinking.style.display = "none"
@@ -469,6 +472,9 @@ let answer = await toServer(Message, historyShot, function(currentAnswer){
 
     newMsg.scrollTop = newMsg.scrollHeight
 });
+sendbtn.textContent = "➤"
+sendbtn.onclick = sendMessage
+currentController = null
 
 if (thinking){
     thinking.style.display = "none"
@@ -492,6 +498,7 @@ if (answer) {
     }
     answer = answer.replace(/\[RESULT:\s*(CORRECT|INCORRECT)\s*\]/gi, "");
     if (flashcardmode && answer.includes("QUESTION:") && answer.includes("ANSWER:")){
+        streamingBotMsg.remove()
         let question = answer.split("QUESTION:")[1].split("ANSWER:")[0].trim()
         previousflash = question
         flashcardanswer = answer.split("ANSWER:")[1].trim()
@@ -557,7 +564,12 @@ function sendBotMessage(answer){
         findChat.scrollTop = findChat.scrollHeight;
 }
 
-
+function StopGeneration(){
+    if(currentController){
+        currentController.abort()
+        currentController = null
+    }
+}
 
 async function toServer(message, history, onChunk){
     let msgData = {
@@ -565,20 +577,22 @@ async function toServer(message, history, onChunk){
         history: history,
         notes: filetext
     };
+    let fullReply = ""
     try{
+        controller = new AbortController()
     let response = await fetch("/api/chat",{
         method : "POST",   
         headers : {
             "Content-Type":"application/json"
         },
-        body : JSON.stringify(msgData)
+        body : JSON.stringify(msgData),
+        signal:controller.signal
     });
     if(!response.ok){
         throw new Error(`HTTP error: ${response.status}`)
     }
     const reader = response.body.getReader()
     const decoder = new TextDecoder()
-    let fullReply = ""
     while(true){
         const{done, value} = await reader.read()
         if(done) break
