@@ -310,7 +310,7 @@ body{
 
 @media (max-width: 768px) {
     .navibar{
-        padding: 12px 18px;
+        padding: 12px 14px;
     }
     .navwrap{
         flex-direction: row;
@@ -322,28 +322,46 @@ body{
     }
     .nav-links{
         flex-direction: row;
-        gap: 14px;
+        gap: 6px;
         width: auto;
         margin-left: auto;
     }
     .nav-links a{
-        font-size: 13px;
+        font-size: 12px;
         margin-bottom: 0;
     }
     .navbtn{
-        padding: 7px 10px;
-        font-size: 13px;
+        padding: 8px 12px;
+        font-size: 12px;
     }
     .hero h1{
-        font-size: 42px;
+        font-size: 38px;
+        max-width: 90%;
     }
     .hero p{
         font-size: 16px;
         padding: 0 20px;
     }
     .hero{
-        min-height: 85vh;
+        min-height: 90vh;
     }
+    .aboutpoints{
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+    }
+    .about{
+        padding: 28px 16px;
+    }
+    .feature{
+        padding: 30px 16px;
+    }
+    .getstarted{
+        padding: 15px 28px;
+    }
+    .getstartedsection{
+        padding: 45px 20px;
 }
 @keyframes heroshow {
     from{
@@ -383,4 +401,4 @@ body{
         transform: translateY(0);
     }
 }
-    
+}
