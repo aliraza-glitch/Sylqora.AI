@@ -1,11 +1,22 @@
+:root{
+    --bg: #0a0a0c;
+    --surface: #111114;
+    --surface-light: #17171b;
+    --border: #26262d;
+    --text: #f5f5f7;
+    --muted: #96969f;
+    --accent: #a78bfa;
+    --accent-hover: #8b5cf6;
+}
 *{
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
+
 body{
-    font-family: Arial, sans-serif;
-    background-color: #121212;
+    font-family: Inter, Arial, sans-serif;
+    background-color: var(--bg);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -18,24 +29,25 @@ body{
 .Chat{
     width: 90%;
     max-width: 800px;
-    margin: 32px auto 20px;
+    margin: 40px auto 24px;
     flex: 1;
     display: flex;
-    gap: 16px;
+    gap: 18px;
     overflow-y:auto;
     flex-direction: column;
 }
 .Botmsg{
-    margin-top: 8px;
+    margin-top: 12px;
     background-color: transparent;
-    color:#eeeeee;
+    color:var(--text);
     padding: 4px 0;
     border-radius: 14px 14px 14px 4px;
     width: fit-content;
-    max-width: 100%;
-    line-height: 1.6;
+    max-width: 92%;
+    line-height: 1.7;
     align-self: flex-start;
     border: none;
+    
 
 }
 .Botmesg{
@@ -47,13 +59,14 @@ body{
     margin: 0 auto 20px;
     display: flex;
     gap: 10px;
-    background-color: #1a1a1a;
+    background-color: var(--surface-light);
     padding: 6px 6px 6px 14px;
-    border: 1px solid #2f2f2f;
+    border: 1px solid var(--border);
     border-radius: 28px;
     position: sticky;
     bottom: 0;
     z-index: 10;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.22);
 }
 .input textarea{
     flex:1;
@@ -73,8 +86,12 @@ body{
     color: #777;
 }
 .input textarea:focus{
-    border-color: #e284e2;
     outline: none;
+}
+.input:focus-within{
+    border-color: rgba(167, 139, 250, 0.45);
+    box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.08),
+            0 8px 30px rgba(167, 139, 250, 0.08);
 }
 button{
     padding: 0 20px;
@@ -91,14 +108,16 @@ button:hover{
     background: rgb(97, 45, 97);
 }
 .UserBubble{
-    background-color: rgb(105,58,105);
+    background: linear-gradient(135deg, rgba(167, 139, 250, 0.32), rgba(89, 61, 102, 0.75));
     color:#ffffff;
     padding: 12px 15px;
     border-radius: 22px;
     width: fit-content;
     max-width: 75%;
-    line-height: 1.3;
+    line-height: 1.5;
     align-self: flex-end;
+    border: 1px solid rgba(167, 139, 250, 0.18);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
 }
 
 #status{
@@ -108,10 +127,10 @@ button:hover{
 }
 .Thinking{
     display: none;
-    background-color:#1e1e1e;
-    color: #bdbdbd;
+    background-color:var(--surface-light);
+    color: var(--muted);
     padding: 12px 15px;
-    border: 1px solid #333;
+    border: 1px solid var(--border);
     border-radius: 8px;
     width: fit-content;
     max-width: 70%;
@@ -129,12 +148,13 @@ button:hover{
     left: 0;
     top: 0;
     height: 100vh;
-    background-color: #1e1e1e;
+    background-color: var(--surface);
     color: white;
     padding: 20px;
-    border-right: 1px solid #333;
+    border-right: 1px solid var(--border);
+    box-shadow: 8px 0 30px rgba(0, 0, 0, 0.18);
     transform: translateX(-100%);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
     z-index: 1000;
 }
 .sidebar.open{
@@ -157,13 +177,13 @@ button:hover{
 
 }
 .chatpiece:hover{
-    background-color: #2a2a2a;
+    background-color: rgba(167, 139, 250, 0.08);
     transform: translateX(3px);
 
 }
 .sidebar h3{
     font-size: 12px;
-    color: #777;
+    color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-top: 6px;
@@ -174,23 +194,28 @@ button:hover{
     height: 42px;
     padding: 0;
     border-radius: 50%;
-    transition: 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background: linear-gradient(135deg, #a78bfa, #8b5cf6);
 }
 .sendbtn:hover{
-    transform: scale(1.2);
+    box-shadow: 0 6px 20px rgba(167, 139, 250, 0.25);
+    transform: scale(1.06);
+    background: linear-gradient(135deg, #b9a0ff, #9d70ff);
 }
 .newchat{
     width: 100%;
     height: 42px;
     border-radius: 10px;
     margin-top: 6px;
-    background-color: #272727;
-    border: 1px solid #333;
-    color: #eeeeee
+    background-color: rgba(167, 139, 250, 0.08);
+    border: 1px solid rgba(167, 139, 250, 0.22);
+    color: #eeeeee;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 .newchat:hover{
-    background-color: #303030;
-    border-color: rgb(139, 65,139);
+    background-color: rgba(167, 139, 250, 0.14);
+    border-color: rgba(167, 139, 250, 0.45);
+    transform: translateY(-1px);
 }
 .sidebrand{
     display: flex;
@@ -199,10 +224,13 @@ button:hover{
 }
 .sidebrand span{
     font-size: 24px;
+    color:var(--accent);
+    text-shadow: 0 0 14px rgba(167, 139, 250, 0.45);
 }
 .sidebrand h2{
     font-size: 18px;
     margin-bottom: 2px;
+    letter-spacing: -0.4px;
 }
 .sidebrand p{
     font-size: 12px;
@@ -213,13 +241,31 @@ button:hover{
     text-align: center;
     color: #eeeeee;
 }
+.welcometxt::before{
+    content: "";
+    position: absolute;
+    width: 520px;
+    height: 280px;
+    background: radial-gradient(
+        ellipse,
+        rgba(167, 139, 250, 0.16) 0%,
+        rgba(139, 92, 246, 0.08) 35%,
+        transparent 70%
+    );
+    filter: blur(18px);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    pointer-events: none;
+}
 .welcometxt h2{
     font-size: 28px;
     margin-bottom: 8px;
-    color: #f1e8f1;
+    color: var(--text);
 }
 .welcometxt p{
-    color: #a8a0a8;
+    color: var(--muted);
     font-size: 14px;
 }
 .suggestions{
@@ -232,20 +278,20 @@ button:hover{
 }
 .suggestion strong{
     font-size: 14px;
-    color: #eeeeee;
+    color: var(--text);
 }
 .suggestion span{
     font-size: 12px;
-    color: #999;
+    color: var(--muted);
     line-height: 1.4;
 }
 .suggestion:hover{
-    border-color: rgb(139, 65, 139);
+    border-color: rgba(167, 139, 250, 0.45);
     transform: translateY(-2px);
 }
 .suggestion{
-    background-color: #1a1a1a;
-    border: 1px solid #303030;
+    background-color: var(--surface-light);
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 14px 16px;
     width: 230px;
@@ -257,8 +303,8 @@ button:hover{
     transition: 0.2s ease;
 }
 .chatpiece.active{
-    background-color: #302330;
-    border-left: 3px solid rgb(139, 65, 139);
+    background-color: rgba(167, 139, 250, 0.10);
+    border-left: 3px solid var(--accent);
 }
 .list{
     overflow-y: auto;
@@ -280,10 +326,13 @@ button:hover{
     inset:0;
     background-color: rgb(0,0,0,0.45);
     z-index: 950;
-    display: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 }
 .sidebaroverlay.open{
-    display: block;
+    opacity: 1;
+    pointer-events: auto;
 }
 .quizstatus{
     display: none;
@@ -296,7 +345,7 @@ button:hover{
     position: sticky;
     top : 0;
     z-index: 10;
-    background-color: #121212;
+    background-color: var(--bg);
 
 }
 .explainstatus{
@@ -309,15 +358,15 @@ button:hover{
     position: sticky;
     top: 0;
     z-index: 10;
-    background-color: #121212;
+    background-color: var(--bg);
 }
 .flashcardbox{
     display: none;
     width: 90%;
     margin: auto;
     max-width: 560px;
-    background-color: #1a1a1a;
-    border: 1px solid #333;
+    background-color: var(--surface-light);
+    border: 1px solid var(--border);
     border-radius: 18px;
     flex-direction: column;
     padding: 28px;
@@ -326,12 +375,13 @@ button:hover{
     gap: 20px;
 }
 .flashcardcontent{
-    color: #eeeeee;
+    color: var(--text);
     font-size: 18px;
     line-height:1.5;
 }
 .flashcardbtn{
     height: 40px;
+    padding: 0 18px;
     border-radius:10px;
 }
 .sidebarbtn{
@@ -344,7 +394,7 @@ button:hover{
     padding: 0;
     z-index: 900;
     font-size: 25px;
-    color: #bdbdbd;
+    color: var(--muted);
     border-radius: 8px;
     border: none;
     
@@ -364,7 +414,7 @@ button:hover{
     font-size: 22px;
     font-weight: normal;
     border-radius: 8px;
-    color:#bdbdbd   
+    color: var(--muted);   
 }
 .sideclose:hover{
     background-color: #2a2a2a;
@@ -374,7 +424,7 @@ button:hover{
     width: 25px;
     height:25px;
     fill: none;
-    stroke: #bdbdbd;
+    stroke: var(--muted);
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 1.8;
@@ -383,7 +433,7 @@ button:hover{
     width: 22px;
     height:22px;
     fill: none;
-    stroke: #bdbdbd;
+    stroke: var(--muted);
     stroke-width: 1.8;
     stroke-linejoin: round;
     stroke-linecap: round;
@@ -450,15 +500,17 @@ button:hover{
 .attachbtn{
     background: transparent;
     border:none;
-    color:#bdbdbd;
+    color:var(--muted);
     font-size: 22px;
     cursor: pointer;
     padding: 8px;
     border-radius: 8px;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 .attachbtn:hover{
-    background-color: #2a2a2a;
+    color: var(--text);
+    background-color: rgba(167, 139, 250, 0.12);
+    transform: scale(1.05);
 }
 .filechip{
     display: none;
@@ -468,17 +520,20 @@ button:hover{
     padding: 7px 10px;
     max-width: 300px;
     margin : 0 auto 8px;
-    background-color: #242424;
-    border: 1px solid #333;
-    color: #bdbdbd;
+    background-color: var(--surface-light);
+    border: 1px solid var(--border);
+    color: var(--muted);
     font-size: 13px;
     border-radius: 10px;
 }
 .removefile{
     background: transparent;
     border: none;
-    color: #888;
+    color: var(--muted);
     cursor:pointer;
     font-size: 17px;
     padding: 0;
+}
+.removefile:hover{
+    color: var(--text);
 }
