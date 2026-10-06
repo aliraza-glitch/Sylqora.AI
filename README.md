@@ -1,87 +1,57 @@
-## Sylqora AI
+### Sylqora AI
 *Your go-to study companion*
+<img width="1200" height="700" alt="image" src="https://github.com/user-attachments/assets/9208a43e-7434-49c8-bff5-c4e98f60afde" />
+
+## About Sylqora
+Sylqora is a study focused AI bot that is designed to help students. This chatbot was built for the sole purpose of learning. It comes with a number of features like Explain mode, Quiz mode and Flashcards along with PDF uploads ( though size should be less than 4 pages)
+####
+## What inspired me to build it?
+In AS, I had a really hard time adapting to Cambridge board pattern. I used to take a lot of help from AI but I noticed something. The big AI companies limited free use of features like PDF reading and in-depth explaining. On top of that, they also lacked things like Quizzes and Flashcards. Even the bots that did make Flashcards were paid. So I decided to make a chatbot. 
+####
+<img width="1200" height="700" alt="image" src="https://github.com/user-attachments/assets/d5c65478-7ec2-47e1-8dfb-ac65f4d47637" />
+
+
+## Features 
 ###
-Sylqora AI is a study focused AI that is designed to help students study effectively and productively.
-####
-Unlike other chatbots that are built for giving answers, Sylqora is built for studying — Explaining concepts, working through problems, testing you, creating flashcards and helping you understand your own study material.
-## What can Sylqora do?
-### 💬 Ask questions
-Ask Sylqora about something you are studying and get an explanation tailored to your question. 
-####
-You can ask simple questions like:
-####
-*What is Gravitational Potential?*
-####
-Or ask it to walk you through a difficult problem step-by-step
-##
-### 📚 Study from your own files
-Upload your study material and ask questions about it.
-####
-Sylqora can work with:
+## Study from your own files
+Sylqora can work with 
 * PDF files
 * Text files
+  ####
+Just upload your files and wait for Sylqora to read it and ask it anything. 
 ####
-For PDFs containing scanned images, Sylqora can also use OCR to extract text from pages and give you your answers.
+Ask it to improve wording or Explain Question 1 part b.
 ####
-You can then ask questions like:
+⚠️ Only limit is PDF should be less than 4 pages
+## Quiz mode
+If you want to test your knowledge about a certain topic or just a reality check that you don't know as much as you think, just select Quiz Mode and name the topic.
 ####
-*What is this PDF about?*
+Sylqora will generate 5 question long quiz and give each question one at a time.
 ####
-*Solve Question 3.*
+Tell you whether your answer is correct and move on
 ####
-*Explain Question 1 part(a)*
+Score will be displayed after you answer the last question
+## Explain Mode
+If a topic is too challenging for you, just use Explain mode. Name the topic and Sylqora will generate an explanation using simple vocabulary, suitable examples and makes sure that you understand the topic. 
+## Flashcards
+Let's just say tomorrow is your exam and you want to revise actively but but but, studying from notes under-presure of exam almost always ends up in panic and time waste.
 ####
-This makes it much easier to study from worksheets, notes and past papers
+Instead, just use Flashcards mode provided by Sylqora.
 ####
-⚠️ Please note that PDF size is limited. Only upload PDFs less than 4 pages or 3 pages so that it doesn't exceed the limit
-##
-### 🧠 Explain mode
-If you do not understand a topic, Explain mode is designed to teach it in simple vocabulary instead of throwing buzz words at you.
+Name the topic and it will keep generating cards with reveal answer button.
 ####
-Just click on Explain mode and Enter the topic you want to understand.
-#### 
-For example:
+This results in a more efficient and effective revision of concepts
+## History
+Sylqora comes with chat history, so that you can revisit previous study sessions and don't have to start from zero. 
+## Streaming
+Sylqora messages are streamed rather than being thrown at you as a block of text. This small detail makes conversations feel way faster and realistic.
 ####
-*Explain gravitational potential simply.*
-####
-Sylqora will break the concepts down and use examples to make sure you get it.
+You can also stop a response while it is being generated.
 ## 
-### 📝 Quiz mode
-Want to test your knowledge on a certain topic?
+## ⚠️ Note 
+Sylqora is an AI companion. It is not a replacement of teachers or your own thinking.
 ####
-Choose quiz mode and enter the name of topic.
-####
-Sylqora will generate a 5 question quiz.
-####
-Next question will be given after checking the answer of the previous question.
-####
-Score will be displayed in the end.
-##
-### 🗂️ Flashcards
-Sylqora can create flashcards for Active recall.
-####
-Give it a topic and it will give you question answer cards on so you can test yourself.
-####
-The goal is not to just read info — it is to actually remember it.
-##
-### ⚡ Streaming responses
-Sylqora doesn't wait until the entire response is finished before showing it.
-####
-Responses appear as they are being made ready. This makes conversations feel much faster and more natural.
-####
-You can also abort a response while it is generating.
-##
-### 💾 Conversations
-Sylqora also features chat history so you can return to previous study sessions rather than starting from zero.
-####
-You can create new chat and return to previous ones as and when needed.
-##
-### A note on AI responses
-Sylqoa uses AI and can sometimes be wrong.
-###
-For important calculations, definitions, exam questions, or factual information, always check the answer against your textbook, teacher, mark scheme, or another reliable source.
-####
-Think of Sylqora as a study buddy rather than a replacement for your teachers or your own ability to think.
-##
-### Sylqora AI - Your go-to study companion
+It is built only to help you and since it is AI, it can sometimes give wrong information. So always double check important information, exam definitions and methods to solve a question with textbooks, teachers or just search whether a statement is correct.
+## Sylqora AI - Your go-to study companion
 [Try Sylqora AI](https://sylqora-b80j2x291-aliraza-glitch.vercel.app/)
+
