@@ -12,42 +12,9 @@ In AS, I had a really hard time adapting to Cambridge board pattern. I used to t
 
 
 ## Features 
-###
-## Study from your own files
-Sylqora can work with 
-* PDF files
-* Text files
-  ####
-Just upload your files and wait for Sylqora to read it and ask it anything. 
-####
-Ask it to improve wording or Explain Question 1 part b.
-####
-⚠️ Only limit is PDF should be less than 4 pages
-## Quiz mode
-If you want to test your knowledge about a certain topic or just a reality check that you don't know as much as you think, just select Quiz Mode and name the topic.
-####
-Sylqora will generate 5 question long quiz and give each question one at a time.
-####
-Tell you whether your answer is correct and move on
-####
-Score will be displayed after you answer the last question
-## Explain Mode
-If a topic is too challenging for you, just use Explain mode. Name the topic and Sylqora will generate an explanation using simple vocabulary, suitable examples and makes sure that you understand the topic. 
-## Flashcards
-Let's just say tomorrow is your exam and you want to revise actively but but but, studying from notes under-presure of exam almost always ends up in panic and time waste.
-####
-Instead, just use Flashcards mode provided by Sylqora.
-####
-Name the topic and it will keep generating cards with reveal answer button.
-####
-This results in a more efficient and effective revision of concepts
-## History
-Sylqora comes with chat history, so that you can revisit previous study sessions and don't have to start from zero. 
-## Streaming
-Sylqora messages are streamed rather than being thrown at you as a block of text. This small detail makes conversations feel way faster and realistic.
-####
-You can also stop a response while it is being generated.
 ## 
+<img width="1342" height="705" alt="image" src="https://github.com/user-attachments/assets/c4d92bab-d7f1-4b90-87da-eb7952a017b0" />
+
 ## ⚠️ Note 
 Sylqora is an AI companion. It is not a replacement of teachers or your own thinking.
 ####
